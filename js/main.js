@@ -8,6 +8,7 @@ function getCocktailData(name) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
+    data.nextEntryId++;
   });
   xhr.send();
 }
