@@ -9,6 +9,7 @@ function getCocktailData(name) {
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
     data.nextEntryId++;
+    searchInput = '';
   });
   xhr.send();
 }
