@@ -11,10 +11,13 @@
   display: flex;
 }
 
-.col-half {
-  width: 50%;
-}
-
+.col-half,
 .col-full {
   width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 1380px;
+  }
 }
