@@ -7,6 +7,7 @@ function getCocktailData(name) {
   xhr.setRequestHeader('X-Api-Key', 'tsY43L3Lh5SZ/WR5FQznyA==QerTD0YdjkWIbYLP');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
+    data.recipe = xhr.response[0];
   });
   xhr.send();
 }
