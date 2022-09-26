@@ -1,4 +1,6 @@
+
 var $searchBar = document.querySelector('#search-bar');
+var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
 
 function getCocktailData(name) {
@@ -8,18 +10,17 @@ function getCocktailData(name) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
-    data.nextEntryId++;
-    searchInput = '';
+    $searchForm.reset();
   });
   xhr.send();
+
 }
 
 $searchBar.addEventListener('input', function (e) {
   searchInput = e.target.value;
 });
 
-$searchBar.addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
-    getCocktailData(searchInput);
-  }
+$searchForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  getCocktailData(searchInput);
 });
