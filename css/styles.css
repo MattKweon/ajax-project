@@ -1,0 +1,35 @@
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.nav-bar {
+  background-color: #b4d7eb;
+  padding: 0.5rem 1rem;
+}
+
+.logo-img {
+  height: auto;
+  width: 70px;
+}
+
+.logo-name {
+  font-family: "Bakbak One", cursive;
+  font-size: 2rem;
+  position: absolute;
+  top: -0.5rem;
+  margin-left: 0.5rem;
+}
+
+#search-btn {
+  height: auto;
+  width: 30px;
+  margin-top: 1.3rem;
+}
+
+.right-align {
+  text-align: right;
+}
