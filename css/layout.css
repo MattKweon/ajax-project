@@ -1,0 +1,27 @@
+.hidden {
+  display: none;
+}
+
+.container {
+  max-width: 575px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+}
+
+.col-half,
+.col-full {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 1380px;
+  }
+
+  .col-half {
+    width: 50%;
+  }
+}

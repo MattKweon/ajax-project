@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,53 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto:wght@100;300;500&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <header>
+    <div class="nav-bar">
+      <div class="row">
+        <div class="col-half">
+          <img class="logo-img inline" src="images/cocktail.png" alt="Logo">
+          <h3 class=" logo-name inline">MoBev!</h3>
+        </div>
+        <div class="col-half right-align">
+          <input type="image" id="search-btn" alt="Search Button" src="images/search.png">
+        </div>
+      </div>
+    </div>
   </header>
   <main>
+    <div class="search-display">
+      <div class="background-img-overlay">
+        <div class="container search-content">
+          <div class="row">
+            <div class="col-full">
+              <h1>Sip on a fancy drink, black out with class.</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-full">
+              <form class="search-form">
+                <input type="search" id="search-bar" placeholder="Search for cocktail" required>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-full">
+              <p><span>recommended: </span>moscow mule, corpse reviver, paloma, negroni</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>
