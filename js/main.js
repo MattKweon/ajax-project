@@ -1,7 +1,15 @@
-
+var $searchDisplay = document.querySelector('.search-display');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
+
+function showDisplay(e) {
+  if (e.target.matches('#search-btn')) {
+    $searchDisplay.classList.remove('hidden');
+  }
+}
+
+document.addEventListener('click', showDisplay);
 
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
