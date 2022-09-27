@@ -92,11 +92,11 @@ span {
   margin-top: 2rem;
 }
 
-.dummy-img-container {
+.img-container {
   height: 15rem;
 }
 
-.dummy-img {
+.cocktail-img {
   height: 100%;
   width: 100%;
   object-fit: cover;
