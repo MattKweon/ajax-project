@@ -21,7 +21,17 @@ function getCocktailData(name) {
     $searchForm.reset();
   });
   xhr.send();
+}
 
+function getCocktailImg(name) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pexels.com/v1/search?query=' + name + ' cocktail');
+  xhr.setRequestHeader('Authorization', '563492ad6f917000010000013f401851feb74faca5ffe16effdf2403');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    // var imgUrl = xhr.response.photos[0].src.original;
+  });
+  xhr.send();
 }
 
 $searchBar.addEventListener('input', function (e) {
@@ -31,4 +41,9 @@ $searchBar.addEventListener('input', function (e) {
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   getCocktailData(searchInput);
+  getCocktailImg(searchInput);
 });
+
+// function createNewRecipe(entry) {
+
+// }
