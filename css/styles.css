@@ -77,3 +77,8 @@ body {
 span {
   opacity: 60%;
 }
+
+.recipe-display {
+  height: 100vh;
+  background-color: #e9edf2;
+}
