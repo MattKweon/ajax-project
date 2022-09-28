@@ -103,6 +103,18 @@ function createNewRecipe(searchEntry) {
   var cocktailName = document.createElement('h1');
   cocktailName.textContent = titleCase(data.recipe.name);
   newColHalf.appendChild(cocktailName);
+  var likeBtn = document.createElement('input');
+  likeBtn.setAttribute('type', 'image');
+  likeBtn.setAttribute('id', 'like-btn');
+  likeBtn.setAttribute('src', 'images/heart-outline.png');
+  likeBtn.setAttribute('alt', 'Like Button');
+  newColHalf.appendChild(likeBtn);
+  var unlikeBtn = document.createElement('input');
+  unlikeBtn.setAttribute('type', 'image');
+  unlikeBtn.setAttribute('id', 'unlike-btn');
+  unlikeBtn.setAttribute('src', 'images/heart-fill.png');
+  unlikeBtn.setAttribute('alt', 'Unlike Button');
+  newColHalf.appendChild(unlikeBtn);
   var ingredients = document.createElement('h3');
   ingredients.textContent = 'Ingredients';
   newColHalf.appendChild(ingredients);
