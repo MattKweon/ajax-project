@@ -9,12 +9,16 @@ function showDisplay() {
   if (data.view === 'search-view') {
     $searchDisplay.classList.remove('hidden');
     $recipeDisplay.classList.add('hidden');
+    $libraryDisplay.classList.add('hidden');
   }
   if (data.view === 'recipe-view') {
-    $recipeDisplay.classList.remove('hidden');
     $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.remove('hidden');
+    $libraryDisplay.classList.add('hidden');
   }
   if (data.view === 'library-view') {
+    $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.add('hidden');
     $libraryDisplay.classList.remove('hidden');
   }
 }
