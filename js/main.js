@@ -92,6 +92,7 @@ function createNewRecipe(entry) {
 }
 
 document.addEventListener('DOMContentLoaded', function (e) {
+  $recipeDisplay.append(createNewRecipe(data.recipe));
   if (data.view === 'recipe-display') {
     $searchDisplay.classList.add('hidden');
     $recipeDisplay.classList.remove('hidden');
