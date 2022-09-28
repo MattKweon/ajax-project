@@ -93,7 +93,7 @@ span {
 }
 
 .img-container {
-  height: 15rem;
+  height: 18rem;
 }
 
 .cocktail-img {
@@ -105,11 +105,29 @@ span {
 
 .recipe-content {
   padding: 1rem;
+  position: relative;
 }
 
 .recipe-content h1 {
   font-weight: 400;
   text-decoration: underline;
+  display: inline-block;
+}
+
+.like-btn {
+  height: auto;
+  width: 2rem;
+  position: absolute;
+  right: 0.75rem;
+  top: 2.4rem;
+}
+
+.unlike-btn {
+  height: auto;
+  width: 2rem;
+  position: absolute;
+  right: 0.75rem;
+  top: 2.4rem;
 }
 
 .recipe-content h3 {
@@ -126,7 +144,7 @@ span {
   }
 
   .img-container {
-    height: 25rem;
+    height: 29rem;
   }
 
   .cocktail-img {

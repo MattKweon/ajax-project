@@ -5,10 +5,21 @@ var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
 
 function showDisplay(e) {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
     $searchDisplay.classList.remove('hidden');
     $recipeDisplay.classList.add('hidden');
     data.view = 'search-display';
+  }
+  if (e.target.matches('.like-btn')) {
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
+    data.recipe.id = data.nextEntryId;
+    data.library.push(data.recipe);
+    data.nextEntryId++;
+    // $recipeDisplay.classList.add('hidden');
+    // $searchDisplay.classList.remove('hidden');
   }
 }
 
@@ -103,6 +114,18 @@ function createNewRecipe(searchEntry) {
   var cocktailName = document.createElement('h1');
   cocktailName.textContent = titleCase(data.recipe.name);
   newColHalf.appendChild(cocktailName);
+  var likeBtn = document.createElement('input');
+  likeBtn.setAttribute('type', 'image');
+  likeBtn.setAttribute('class', 'like-btn');
+  likeBtn.setAttribute('src', 'images/heart-outline.png');
+  likeBtn.setAttribute('alt', 'Like Button');
+  newColHalf.appendChild(likeBtn);
+  var unlikeBtn = document.createElement('input');
+  unlikeBtn.setAttribute('type', 'image');
+  unlikeBtn.setAttribute('class', 'unlike-btn hidden');
+  unlikeBtn.setAttribute('src', 'images/heart-fill.png');
+  unlikeBtn.setAttribute('alt', 'Unlike Button');
+  newColHalf.appendChild(unlikeBtn);
   var ingredients = document.createElement('h3');
   ingredients.textContent = 'Ingredients';
   newColHalf.appendChild(ingredients);
