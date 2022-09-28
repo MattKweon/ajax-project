@@ -10,6 +10,9 @@ function showDisplay(e) {
     $recipeDisplay.classList.add('hidden');
     data.view = 'search-display';
   }
+  // if (e.target.matches('.like-btn')) {
+
+  // }
 }
 
 document.addEventListener('click', showDisplay);
