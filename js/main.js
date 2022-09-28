@@ -32,6 +32,7 @@ function handleClick(e) {
     // $searchDisplay.classList.remove('hidden');
   }
   if (e.target.matches('#library-tab')) {
+    data.view = 'library-view';
     showDisplay();
   }
 }
