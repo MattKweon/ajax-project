@@ -31,6 +31,9 @@ function handleClick(e) {
     // $recipeDisplay.classList.add('hidden');
     // $searchDisplay.classList.remove('hidden');
   }
+  if (e.target.matches('#library-tab')) {
+    showDisplay();
+  }
 }
 
 document.addEventListener('click', handleClick);

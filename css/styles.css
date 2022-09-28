@@ -3,10 +3,6 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-.inline {
-  display: inline-block;
-}
-
 .flex {
   display: flex;
 }
