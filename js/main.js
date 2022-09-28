@@ -105,13 +105,13 @@ function createNewRecipe(searchEntry) {
   newColHalf.appendChild(cocktailName);
   var likeBtn = document.createElement('input');
   likeBtn.setAttribute('type', 'image');
-  likeBtn.setAttribute('id', 'like-btn');
+  likeBtn.setAttribute('class', 'like-btn');
   likeBtn.setAttribute('src', 'images/heart-outline.png');
   likeBtn.setAttribute('alt', 'Like Button');
   newColHalf.appendChild(likeBtn);
   var unlikeBtn = document.createElement('input');
   unlikeBtn.setAttribute('type', 'image');
-  unlikeBtn.setAttribute('id', 'unlike-btn');
+  unlikeBtn.setAttribute('class', 'unlike-btn hidden');
   unlikeBtn.setAttribute('src', 'images/heart-fill.png');
   unlikeBtn.setAttribute('alt', 'Unlike Button');
   newColHalf.appendChild(unlikeBtn);

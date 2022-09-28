@@ -110,6 +110,21 @@ span {
 .recipe-content h1 {
   font-weight: 400;
   text-decoration: underline;
+  display: inline-block;
+}
+
+.like-btn {
+  height: auto;
+  width: 2rem;
+  position: absolute;
+  right: 2.5rem;
+}
+
+.unlike-btn {
+  height: auto;
+  width: 2rem;
+  position: absolute;
+  right: 2.5rem;
 }
 
 .recipe-content h3 {
