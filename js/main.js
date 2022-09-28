@@ -87,6 +87,7 @@ $searchBar.addEventListener('input', function (e) {
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   data.view = 'recipe-view';
+  data.savedRecipe = false;
   showDisplay();
   getCocktailData(searchInput);
 });
@@ -178,8 +179,10 @@ function createNewRecipe(searchEntry) {
 
 document.addEventListener('DOMContentLoaded', function (e) {
   showDisplay();
-  if (!data.library) {
+  if (data.view === 'recipe-display') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
+  }
+  if (data.library) {
     for (var i = 0; i < data.library.length; i++) {
       $recipeCardList.prepend(createNewRecipe(data.library[i]));
     }
