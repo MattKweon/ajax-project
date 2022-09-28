@@ -3,10 +3,10 @@ var $recipeDisplay = document.querySelector('.recipe-display');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
-var $likeBtn = document.querySelector('.like-btn');
-var $unlikeBtn = document.querySelector('.unlike-btn');
 
 function showDisplay(e) {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
     $searchDisplay.classList.remove('hidden');
     $recipeDisplay.classList.add('hidden');
