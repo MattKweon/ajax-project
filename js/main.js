@@ -91,6 +91,9 @@ function createNewRecipe(entry) {
   return cardContainer;
 }
 
-// document.addEventListener('DOMContentLoaded', function (e) {
-//   if (data)
-// });
+document.addEventListener('DOMContentLoaded', function (e) {
+  if (data.view === 'recipe-display') {
+    $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.remove('hidden');
+  }
+});
