@@ -3,7 +3,6 @@ var $recipeDisplay = document.querySelector('.recipe-display');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
-var ingredientList = data.recipe.ingredients;
 
 function showDisplay(e) {
   if (e.target.matches('#search-btn')) {
@@ -32,9 +31,9 @@ function getCocktailImg(name) {
   xhr.setRequestHeader('Authorization', '563492ad6f917000010000013f401851feb74faca5ffe16effdf2403');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
+    var $recipeCard = document.querySelector('.recipe-card');
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
-    var $recipeCard = document.querySelector('.recipe-card');
     $recipeCard.remove();
     $recipeDisplay.append(createNewRecipe(data.recipe));
   });
@@ -78,6 +77,7 @@ function titleCase(string) {
 }
 
 function createNewRecipe(searchEntry) {
+  var ingredientList = data.recipe.ingredients;
   var cardContainer = document.createElement('div');
   cardContainer.setAttribute('class', 'container recipe-card');
   var rowEl = document.createElement('div');
