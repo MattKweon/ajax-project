@@ -7,6 +7,8 @@ var searchInput = '';
 function showDisplay(e) {
   if (e.target.matches('#search-btn')) {
     $searchDisplay.classList.remove('hidden');
+    $recipeDisplay.classList.add('hidden');
+    data.view = 'search-display';
   }
 }
 
@@ -47,6 +49,7 @@ $searchBar.addEventListener('input', function (e) {
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   $searchDisplay.classList.add('hidden');
+  $recipeDisplay.classList.remove('hidden');
   data.view = 'recipe-display';
   getCocktailData(searchInput);
 });
