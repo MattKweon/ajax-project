@@ -105,6 +105,7 @@ span {
 
 .recipe-content {
   padding: 1rem;
+  position: relative;
 }
 
 .recipe-content h1 {
@@ -117,14 +118,16 @@ span {
   height: auto;
   width: 2rem;
   position: absolute;
-  right: 2.5rem;
+  right: 0.75rem;
+  top: 2.4rem;
 }
 
 .unlike-btn {
   height: auto;
   width: 2rem;
   position: absolute;
-  right: 2.5rem;
+  right: 0.75rem;
+  top: 2.4rem;
 }
 
 .recipe-content h3 {

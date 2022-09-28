@@ -3,6 +3,8 @@ var $recipeDisplay = document.querySelector('.recipe-display');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
+var $likeBtn = document.querySelector('.like-btn');
+var $unlikeBtn = document.querySelector('.unlike-btn');
 
 function showDisplay(e) {
   if (e.target.matches('#search-btn')) {
@@ -10,9 +12,10 @@ function showDisplay(e) {
     $recipeDisplay.classList.add('hidden');
     data.view = 'search-display';
   }
-  // if (e.target.matches('.like-btn')) {
-
-  // }
+  if (e.target.matches('.like-btn')) {
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
+  }
 }
 
 document.addEventListener('click', showDisplay);
