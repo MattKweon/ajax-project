@@ -18,6 +18,8 @@ function showDisplay(e) {
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
     data.nextEntryId++;
+    // $recipeDisplay.classList.add('hidden');
+    // $searchDisplay.classList.remove('hidden');
   }
 }
 
