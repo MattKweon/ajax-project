@@ -52,7 +52,32 @@ $searchForm.addEventListener('submit', function (e) {
   getCocktailData(searchInput);
 });
 
-function createNewRecipe(entry) {
+function titleCase(string) {
+  var output = '';
+  string = string.toLowerCase().split(' ');
+
+  output = string[0][0].toUpperCase() + string[0].slice(1).toLowerCase();
+  if (string.length === 1) {
+    return output;
+  }
+  output += ' ';
+  if (string.length > 1 && string.length !== 2) {
+    for (var i = 1; i < string.length - 1; i++) {
+      if (string[i] === 'and' || string[i] === 'or' || string[i] === 'nor' || string[i] === 'but' ||
+        string[i] === 'a' || string[i] === 'an' || string[i] === 'the' || string[i] === 'as' || string[i] === 'at' ||
+        string[i] === 'by' || string[i] === 'for' || string[i] === 'in' || string[i] === 'of' || string[i] === 'on' ||
+        string[i] === 'per' || string[i] === 'to') {
+        output += string[i].toLowerCase() + ' ';
+      } else {
+        output += string[i][0].toUpperCase() + string[i].slice(1).toLowerCase() + ' ';
+      }
+    }
+  }
+  output += string[string.length - 1][0].toUpperCase() + string[string.length - 1].slice(1).toLowerCase();
+  return output;
+}
+
+function createNewRecipe(searchEntry) {
   var cardContainer = document.createElement('div');
   cardContainer.setAttribute('class', 'container recipe-card');
   var rowEl = document.createElement('div');
@@ -73,7 +98,7 @@ function createNewRecipe(entry) {
   newColHalf.setAttribute('class', 'col-half recipe-content');
   rowEl.appendChild(newColHalf);
   var cocktailName = document.createElement('h1');
-  cocktailName.textContent = data.recipe.name;
+  cocktailName.textContent = titleCase(data.recipe.name);
   newColHalf.appendChild(cocktailName);
   var ingredients = document.createElement('h3');
   ingredients.textContent = 'Ingredients';
@@ -90,6 +115,7 @@ function createNewRecipe(entry) {
   newColHalf.appendChild(instructions);
   var p = document.createElement('p');
   p.textContent = data.recipe.instructions;
+  newColHalf.appendChild(p);
   return cardContainer;
 }
 
