@@ -1,17 +1,21 @@
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
+var $libraryDisplay = document.querySelector('.library-display');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
 
 function showDisplay() {
-  if (data.view === 'search-display') {
+  if (data.view === 'search-view') {
     $searchDisplay.classList.remove('hidden');
     $recipeDisplay.classList.add('hidden');
   }
-  if (data.view === 'recipe-display') {
+  if (data.view === 'recipe-view') {
     $recipeDisplay.classList.remove('hidden');
     $searchDisplay.classList.add('hidden');
+  }
+  if (data.view === 'library-view') {
+    $libraryDisplay.classList.remove('hidden');
   }
 }
 
@@ -19,7 +23,7 @@ function handleClick(e) {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
-    data.view = 'search-display';
+    data.view = 'search-view';
     showDisplay();
   }
   if (e.target.matches('.like-btn')) {
@@ -75,7 +79,7 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  data.view = 'recipe-display';
+  data.view = 'recipe-view';
   showDisplay();
   getCocktailData(searchInput);
 });
@@ -162,7 +166,7 @@ function createNewRecipe(searchEntry) {
 
 document.addEventListener('DOMContentLoaded', function (e) {
   $recipeDisplay.append(createNewRecipe(data.recipe));
-  if (data.view === 'recipe-display') {
+  if (data.view === 'recipe-view') {
     $searchDisplay.classList.add('hidden');
     $recipeDisplay.classList.remove('hidden');
   }
