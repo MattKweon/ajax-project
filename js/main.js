@@ -4,13 +4,23 @@ var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
 
-function showDisplay(e) {
+function showDisplay() {
+  if (data.view === 'search-display') {
+    $searchDisplay.classList.remove('hidden');
+    $recipeDisplay.classList.add('hidden');
+  }
+  if (data.view === 'recipe-display') {
+    $recipeDisplay.classList.remove('hidden');
+    $searchDisplay.classList.add('hidden');
+  }
+}
+
+function handleClick(e) {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
-    $searchDisplay.classList.remove('hidden');
-    $recipeDisplay.classList.add('hidden');
     data.view = 'search-display';
+    showDisplay();
   }
   if (e.target.matches('.like-btn')) {
     $likeBtn.classList.add('hidden');
@@ -23,7 +33,7 @@ function showDisplay(e) {
   }
 }
 
-document.addEventListener('click', showDisplay);
+document.addEventListener('click', handleClick);
 
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
@@ -44,10 +54,12 @@ function getCocktailImg(name) {
   xhr.setRequestHeader('Authorization', '563492ad6f917000010000013f401851feb74faca5ffe16effdf2403');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    var $recipeCard = document.querySelector('.recipe-card');
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
-    $recipeCard.remove();
+    if (data.recipe !== null) {
+      var $recipeCard = document.querySelector('.recipe-card');
+      $recipeCard.remove();
+    }
     $recipeDisplay.append(createNewRecipe(data.recipe));
   });
   xhr.send();
@@ -59,9 +71,8 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  $searchDisplay.classList.add('hidden');
-  $recipeDisplay.classList.remove('hidden');
   data.view = 'recipe-display';
+  showDisplay();
   getCocktailData(searchInput);
 });
 
