@@ -1,8 +1,8 @@
 var $searchDisplay = document.querySelector('.search-display');
+var $recipeDisplay = document.querySelector('.recipe-display');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
-var $recipeDisplay = document.querySelector('.recipe-display');
 var ingredientList = data.recipe.ingredients;
 
 function showDisplay(e) {
@@ -45,6 +45,7 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
+  $searchDisplay.classList.add('hidden');
   getCocktailData(searchInput);
 });
 
@@ -88,3 +89,7 @@ function createNewRecipe(entry) {
   p.textContent = data.recipe.instructions;
   return cardContainer;
 }
+
+// document.addEventListener('DOMContentLoaded', function (e) {
+//   if (data)
+// });
