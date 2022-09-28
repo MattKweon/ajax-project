@@ -16,7 +16,7 @@ function showDisplay(e) {
     $likeBtn.classList.add('hidden');
     $unlikeBtn.classList.remove('hidden');
     data.recipe.id = data.nextEntryId;
-    // data.library.push(data.recipe);
+    data.library.push(data.recipe);
     // data.nextEntryId++;
   }
 }
