@@ -1,9 +1,14 @@
 body {
+  background-color: #e9edf2;
   font-family: Roboto, sans-serif;
 }
 
 .inline {
   display: inline-block;
+}
+
+.no-wrap {
+  flex-wrap: nowrap;
 }
 
 .nav-bar {
@@ -26,8 +31,8 @@ body {
 
 #search-btn {
   height: auto;
-  width: 30px;
-  margin-top: 1.3rem;
+  width: 25px;
+  margin-top: 1.5rem;
 }
 
 .right-align {
@@ -67,6 +72,7 @@ body {
   border-radius: 5px;
   width: 100%;
   height: 2.5rem;
+  padding-left: 1rem;
 }
 
 .search-display p {
@@ -76,4 +82,54 @@ body {
 
 span {
   opacity: 60%;
+}
+
+.recipe-card {
+  border-radius: 10px;
+  background-color: #ffff;
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.7);
+  max-width: 21rem;
+  margin-top: 2rem;
+}
+
+.img-container {
+  height: 15rem;
+}
+
+.cocktail-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.recipe-content {
+  padding: 1rem;
+}
+
+.recipe-content h1 {
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.recipe-content h3 {
+  font-weight: 500;
+}
+
+.recipe-content li {
+  line-height: 1.5;
+}
+
+@media screen and (min-width: 768px) {
+  .recipe-card {
+    max-width: 50rem;
+  }
+
+  .img-container {
+    height: 25rem;
+  }
+
+  .cocktail-img {
+    border-radius: 10px 0 0 10px;
+  }
 }

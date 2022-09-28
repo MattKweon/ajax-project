@@ -1,6 +1,6 @@
 /* exported data */
 var data = {
-  view: 'search-form',
+  view: 'search-display',
   recipe: null,
   library: [],
   nextEntryId: 1
