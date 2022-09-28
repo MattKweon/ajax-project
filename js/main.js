@@ -46,6 +46,7 @@ $searchBar.addEventListener('input', function (e) {
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   $searchDisplay.classList.add('hidden');
+  data.view = 'recipe-display';
   getCocktailData(searchInput);
 });
 
