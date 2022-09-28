@@ -34,16 +34,17 @@ function handleClick(e) {
   if (e.target.matches('.like-btn')) {
     $likeBtn.classList.add('hidden');
     $unlikeBtn.classList.remove('hidden');
+    data.savedRecipe = true;
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
     data.nextEntryId++;
     $recipeCardList.prepend(createNewRecipe(data.library));
-    $likeBtn.classList.add('hidden');
-    $unlikeBtn.classList.remove('hidden');
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
     showDisplay();
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
   }
 }
 
@@ -147,7 +148,7 @@ function createNewRecipe(searchEntry) {
   newColHalf.appendChild(likeBtn);
   var unlikeBtn = document.createElement('input');
   unlikeBtn.setAttribute('type', 'image');
-  unlikeBtn.setAttribute('class', 'unlike-btn hidden');
+  unlikeBtn.setAttribute('class', 'unlike-btn');
   unlikeBtn.setAttribute('src', 'images/heart-fill.png');
   unlikeBtn.setAttribute('alt', 'Unlike Button');
   newColHalf.appendChild(unlikeBtn);
@@ -167,6 +168,11 @@ function createNewRecipe(searchEntry) {
   var p = document.createElement('p');
   p.textContent = data.recipe.instructions;
   newColHalf.appendChild(p);
+  if (!data.savedRecipe) {
+    unlikeBtn.classList.add('hidden');
+  } else {
+    likeBtn.classList.add('hidden');
+  }
   return cardContainer;
 }
 
