@@ -122,10 +122,14 @@ span {
 
 @media screen and (min-width: 768px) {
   .recipe-card {
-    max-width: 45rem;
+    max-width: 50rem;
   }
 
   .img-container {
     height: 24rem;
+  }
+
+  .cocktail-img {
+    border-radius: 10px 0 0 10px;
   }
 }
