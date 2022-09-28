@@ -1,6 +1,7 @@
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
 var $libraryDisplay = document.querySelector('.library-display');
+var $recipeCardList = document.querySelector('.recipe-card-list');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
@@ -36,8 +37,9 @@ function handleClick(e) {
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
     data.nextEntryId++;
-    // $recipeDisplay.classList.add('hidden');
-    // $searchDisplay.classList.remove('hidden');
+    $recipeCardList.prepend(createNewRecipe(data.library));
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
@@ -68,7 +70,7 @@ function getCocktailImg(name) {
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
-    if (data.recipe !== null) {
+    if (!data.recipe) {
       var $recipeCard = document.querySelector('.recipe-card');
       $recipeCard.remove();
     }
@@ -169,9 +171,11 @@ function createNewRecipe(searchEntry) {
 }
 
 document.addEventListener('DOMContentLoaded', function (e) {
-  $recipeDisplay.append(createNewRecipe(data.recipe));
-  if (data.view === 'recipe-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.remove('hidden');
+  showDisplay();
+  if (!data.library) {
+    $recipeDisplay.append(createNewRecipe(data.recipe));
+    for (var i = 0; i < data.library.length; i++) {
+      $recipeCardList.prepend(createNewRecipe(data.library[i]));
+    }
   }
 });
