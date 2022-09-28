@@ -4,7 +4,6 @@ var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
 var ingredientList = data.recipe.ingredients;
-var $recipeCard = document.querySelector('.recipe-card');
 
 function showDisplay(e) {
   if (e.target.matches('#search-btn')) {
@@ -35,6 +34,7 @@ function getCocktailImg(name) {
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
+    var $recipeCard = document.querySelector('.recipe-card');
     $recipeCard.remove();
     $recipeDisplay.append(createNewRecipe(data.recipe));
   });
