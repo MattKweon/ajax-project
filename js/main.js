@@ -56,6 +56,7 @@ function handleClick(e) {
     $modalDisplay.classList.add('hidden');
   }
   if (e.target.matches('.confirm-btn')) {
+    $modalDisplay.classList.add('hidden');
     var selectedCardId = Number($unlikeBtn.closest('li').getAttribute('data-id'));
     for (var i = 0; i < data.library.length; i++) {
       if (selectedCardId === data.library[i].id) {
