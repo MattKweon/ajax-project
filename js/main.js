@@ -52,6 +52,9 @@ function handleClick(e) {
   if (e.target.matches('.unlike-btn')) {
     $modalDisplay.classList.remove('hidden');
   }
+  if (e.target.matches('.cancel-btn')) {
+    $modalDisplay.classList.add('hidden');
+  }
 }
 
 document.addEventListener('click', handleClick);
