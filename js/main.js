@@ -55,9 +55,14 @@ function handleClick(e) {
   if (e.target.matches('.cancel-btn')) {
     $modalDisplay.classList.add('hidden');
   }
-  // if (e.target.matches('.confirm-btn')) {
-
-  // }
+  if (e.target.matches('.confirm-btn')) {
+    var selectedCardId = Number($unlikeBtn.closest('li').getAttribute('data-id'));
+    for (var i = 0; i < data.library.length; i++) {
+      if (selectedCardId === data.library[i].id) {
+        data.library.splice(selectedCardId - 1);
+      }
+    }
+  }
 }
 
 document.addEventListener('click', handleClick);
@@ -137,8 +142,9 @@ function titleCase(string) {
 
 function createNewRecipe(entry) {
   var ingredientList = entry.ingredients;
-  var cardContainer = document.createElement('div');
-  cardContainer.setAttribute('class', 'container recipe-card');
+  var cardContainer = document.createElement('li');
+  cardContainer.setAttribute('class', 'recipe-card container');
+  cardContainer.setAttribute('data-id', entry.id);
   var rowEl = document.createElement('div');
   rowEl.setAttribute('class', 'row');
   cardContainer.appendChild(rowEl);
@@ -154,7 +160,7 @@ function createNewRecipe(entry) {
   cocktailImg.setAttribute('alt', entry.name);
   imgContainer.appendChild(cocktailImg);
   var newColHalf = document.createElement('div');
-  newColHalf.setAttribute('class', 'col-half recipe-content');
+  newColHalf.setAttribute('class', 'recipe-content col-half');
   rowEl.appendChild(newColHalf);
   var cocktailName = document.createElement('h1');
   cocktailName.textContent = titleCase(entry.name);

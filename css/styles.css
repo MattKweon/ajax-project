@@ -102,6 +102,7 @@ span {
   max-width: 21rem;
   margin-top: 2rem;
   margin-bottom: 5rem;
+  list-style-type: none;
 }
 
 .img-container {
