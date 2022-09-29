@@ -38,7 +38,7 @@ function handleClick(e) {
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
     data.nextEntryId++;
-    $recipeCardList.prepend(createNewRecipe(data.library));
+    $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
@@ -73,11 +73,17 @@ function getCocktailImg(name) {
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
+    var searchEntry = {
+      imgUrl: data.recipe.imgUrl,
+      name: data.recipe.name,
+      ingredients: data.recipe.ingredients,
+      instructions: data.recipe.ingredients
+    };
     var $recipeCard = document.querySelector('.recipe-card');
     if ($recipeCard) {
       $recipeCard.remove();
     }
-    $recipeDisplay.append(createNewRecipe(data.recipe));
+    $recipeDisplay.append(createNewRecipe(searchEntry));
   });
   xhr.send();
 }
@@ -119,8 +125,8 @@ function titleCase(string) {
   return output;
 }
 
-function createNewRecipe(searchEntry) {
-  var ingredientList = data.recipe.ingredients;
+function createNewRecipe(entry) {
+  var ingredientList = entry.ingredients;
   var cardContainer = document.createElement('div');
   cardContainer.setAttribute('class', 'container recipe-card');
   var rowEl = document.createElement('div');
@@ -134,14 +140,14 @@ function createNewRecipe(searchEntry) {
   colHalf.appendChild(imgContainer);
   var cocktailImg = document.createElement('img');
   cocktailImg.setAttribute('class', 'cocktail-img');
-  cocktailImg.setAttribute('src', data.recipe.imgUrl);
-  cocktailImg.setAttribute('alt', data.recipe.name);
+  cocktailImg.setAttribute('src', entry.imgUrl);
+  cocktailImg.setAttribute('alt', entry.name);
   imgContainer.appendChild(cocktailImg);
   var newColHalf = document.createElement('div');
   newColHalf.setAttribute('class', 'col-half recipe-content');
   rowEl.appendChild(newColHalf);
   var cocktailName = document.createElement('h1');
-  cocktailName.textContent = titleCase(data.recipe.name);
+  cocktailName.textContent = titleCase(entry.name);
   newColHalf.appendChild(cocktailName);
   var likeBtn = document.createElement('input');
   likeBtn.setAttribute('type', 'image');
@@ -169,7 +175,7 @@ function createNewRecipe(searchEntry) {
   instructions.textContent = 'Instructions';
   newColHalf.appendChild(instructions);
   var p = document.createElement('p');
-  p.textContent = data.recipe.instructions;
+  p.textContent = entry.instructions;
   newColHalf.appendChild(p);
   if (!data.savedRecipe) {
     unlikeBtn.classList.add('hidden');
