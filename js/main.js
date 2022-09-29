@@ -1,11 +1,12 @@
+var $navBar = document.querySelector('.nav-nbar');
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
 var $libraryDisplay = document.querySelector('.library-display');
 var $recipeCardList = document.querySelector('.recipe-card-list');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
-var searchInput = '';
 var $modalDisplay = document.querySelector('.modal-display');
+var searchInput = '';
 
 function showDisplay() {
   if (data.view === 'search-view') {
@@ -25,21 +26,12 @@ function showDisplay() {
   }
 }
 
-function handleClick(e) {
+function handleClickNavBar(e) {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
     showDisplay();
-  }
-  if (e.target.matches('.like-btn')) {
-    $likeBtn.classList.add('hidden');
-    $unlikeBtn.classList.remove('hidden');
-    data.savedRecipe = true;
-    data.recipe.id = data.nextEntryId;
-    data.library.push(data.recipe);
-    data.nextEntryId++;
-    $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
@@ -49,11 +41,31 @@ function handleClick(e) {
       $unlikeBtn.classList.remove('hidden');
     }
   }
+}
+
+$navBar.addEventListener('click', handleClickNavBar);
+
+function handleClick(e) {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
+  if (e.target.matches('.like-btn')) {
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
+    data.savedRecipe = true;
+    data.recipe.id = data.nextEntryId;
+    data.library.push(data.recipe);
+    data.nextEntryId++;
+    $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
+  }
   if (e.target.matches('.unlike-btn')) {
     $modalDisplay.classList.remove('hidden');
     data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
-
   }
+}
+
+document.addEventListener('click', handleClick);
+
+function handleClickModal(e) {
   if (e.target.matches('.cancel-btn')) {
     $modalDisplay.classList.add('hidden');
   }
@@ -73,7 +85,7 @@ function handleClick(e) {
   }
 }
 
-document.addEventListener('click', handleClick);
+$modalDisplay.addEventListener('click', handleClickModal);
 
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
