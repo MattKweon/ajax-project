@@ -1,4 +1,4 @@
-var $navBar = document.querySelector('.nav-nbar');
+var $navBar = document.querySelector('.nav-bar');
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
 var $libraryDisplay = document.querySelector('.library-display');
@@ -70,6 +70,10 @@ function handleClickModal(e) {
     $modalDisplay.classList.add('hidden');
   }
   if (e.target.matches('.confirm-btn')) {
+    if (data.view === 'recipe-view') {
+      data.view = 'search-view';
+      showDisplay();
+    }
     $modalDisplay.classList.add('hidden');
     var cardNodeList = document.querySelectorAll('.recipe-card');
     for (var i = 0; i < data.library.length; i++) {
@@ -223,7 +227,7 @@ function createNewRecipe(entry) {
 
 document.addEventListener('DOMContentLoaded', function (e) {
   showDisplay();
-  if (data.view === 'recipe-display') {
+  if (data.view === 'recipe-view') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
   }
   if (data.library) {
