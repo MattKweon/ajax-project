@@ -5,6 +5,7 @@ var $recipeCardList = document.querySelector('.recipe-card-list');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
+var $modalDisplay = document.querySelector('.modal-display');
 
 function showDisplay() {
   if (data.view === 'search-view') {
@@ -48,9 +49,9 @@ function handleClick(e) {
       $unlikeBtn.classList.remove('hidden');
     }
   }
-  // if (e.target.matches('.unlike-btn')) {
-
-  // }
+  if (e.target.matches('.unlike-btn')) {
+    $modalDisplay.classList.remove('hidden');
+  }
 }
 
 document.addEventListener('click', handleClick);
