@@ -43,8 +43,10 @@ function handleClick(e) {
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
     showDisplay();
-    $likeBtn.classList.add('hidden');
-    $unlikeBtn.classList.remove('hidden');
+    if ($likeBtn) {
+      $likeBtn.classList.add('hidden');
+      $unlikeBtn.classList.remove('hidden');
+    }
   }
 }
 
@@ -71,8 +73,8 @@ function getCocktailImg(name) {
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
-    if (!data.recipe) {
-      var $recipeCard = document.querySelector('.recipe-card');
+    var $recipeCard = document.querySelector('.recipe-card');
+    if ($recipeCard) {
       $recipeCard.remove();
     }
     $recipeDisplay.append(createNewRecipe(data.recipe));
