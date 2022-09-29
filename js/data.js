@@ -2,6 +2,7 @@
 var data = {
   view: 'search-display',
   recipe: null,
+  savedRecipe: false,
   library: [],
   nextEntryId: 1
 };

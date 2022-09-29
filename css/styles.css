@@ -3,8 +3,8 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-.inline {
-  display: inline-block;
+.flex {
+  display: flex;
 }
 
 .no-wrap {
@@ -13,20 +13,31 @@ body {
 
 .nav-bar {
   background-color: #b4d7eb;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0 0;
 }
 
 .logo-img {
-  height: auto;
-  width: 70px;
+  width: auto;
+  height: 70px;
 }
 
 .logo-name {
   font-family: "Bakbak One", cursive;
   font-size: 2rem;
-  position: absolute;
-  top: -0.5rem;
-  margin-left: 0.5rem;
+  margin-bottom: 0;
+  position: relative;
+  bottom: 1.2rem;
+  left: 0.5rem;
+}
+
+a {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: black;
+  text-decoration: none;
+  position: relative;
+  top: 1.85rem;
+  left: 2rem;
 }
 
 #search-btn {
@@ -90,6 +101,7 @@ span {
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.7);
   max-width: 21rem;
   margin-top: 2rem;
+  margin-bottom: 5rem;
 }
 
 .img-container {
@@ -136,6 +148,10 @@ span {
 
 .recipe-content li {
   line-height: 1.5;
+}
+
+.library-display h2 {
+  text-align: center;
 }
 
 @media screen and (min-width: 768px) {

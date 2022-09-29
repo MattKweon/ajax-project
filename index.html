@@ -19,9 +19,10 @@
   <header>
     <div class="nav-bar">
       <div class="row no-wrap">
-        <div class="col-half">
-          <img class="logo-img inline" src="images/cocktail.png" alt="Logo">
-          <h3 class=" logo-name inline">MoBev!</h3>
+        <div class="col-half flex">
+          <img class="logo-img" src="images/cocktail.png" alt="Logo">
+          <h3 class="logo-name">MoBev!</h3>
+          <a id="library-tab" href="#">Library</a>
         </div>
         <div class="col-half right-align">
           <input type="image" id="search-btn" alt="Search Button" src="images/search.png">
@@ -53,7 +54,11 @@
         </div>
       </div>
     </div>
-    <div class="recipe-display"></div>
+    <div class="recipe-display hidden"></div>
+    <div class="library-display hidden">
+      <h2>Recipe List</h2>
+      <div class="recipe-card-list"></div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

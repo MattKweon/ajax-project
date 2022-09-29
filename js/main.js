@@ -1,29 +1,56 @@
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
+var $libraryDisplay = document.querySelector('.library-display');
+var $recipeCardList = document.querySelector('.recipe-card-list');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var searchInput = '';
 
-function showDisplay(e) {
+function showDisplay() {
+  if (data.view === 'search-view') {
+    $searchDisplay.classList.remove('hidden');
+    $recipeDisplay.classList.add('hidden');
+    $libraryDisplay.classList.add('hidden');
+  }
+  if (data.view === 'recipe-view') {
+    $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.remove('hidden');
+    $libraryDisplay.classList.add('hidden');
+  }
+  if (data.view === 'library-view') {
+    $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.add('hidden');
+    $libraryDisplay.classList.remove('hidden');
+  }
+}
+
+function handleClick(e) {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
-    $searchDisplay.classList.remove('hidden');
-    $recipeDisplay.classList.add('hidden');
-    data.view = 'search-display';
+    data.view = 'search-view';
+    showDisplay();
   }
   if (e.target.matches('.like-btn')) {
     $likeBtn.classList.add('hidden');
     $unlikeBtn.classList.remove('hidden');
+    data.savedRecipe = true;
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
     data.nextEntryId++;
-    // $recipeDisplay.classList.add('hidden');
-    // $searchDisplay.classList.remove('hidden');
+    $recipeCardList.prepend(createNewRecipe(data.library));
+  }
+  if (e.target.matches('#library-tab')) {
+    data.view = 'library-view';
+    showDisplay();
+    if ($likeBtn) {
+      $likeBtn.classList.add('hidden');
+      $unlikeBtn.classList.remove('hidden');
+    }
   }
 }
 
-document.addEventListener('click', showDisplay);
+document.addEventListener('click', handleClick);
 
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
@@ -44,10 +71,12 @@ function getCocktailImg(name) {
   xhr.setRequestHeader('Authorization', '563492ad6f917000010000013f401851feb74faca5ffe16effdf2403');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    var $recipeCard = document.querySelector('.recipe-card');
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
-    $recipeCard.remove();
+    var $recipeCard = document.querySelector('.recipe-card');
+    if ($recipeCard) {
+      $recipeCard.remove();
+    }
     $recipeDisplay.append(createNewRecipe(data.recipe));
   });
   xhr.send();
@@ -59,9 +88,9 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  $searchDisplay.classList.add('hidden');
-  $recipeDisplay.classList.remove('hidden');
-  data.view = 'recipe-display';
+  data.view = 'recipe-view';
+  data.savedRecipe = false;
+  showDisplay();
   getCocktailData(searchInput);
 });
 
@@ -122,7 +151,7 @@ function createNewRecipe(searchEntry) {
   newColHalf.appendChild(likeBtn);
   var unlikeBtn = document.createElement('input');
   unlikeBtn.setAttribute('type', 'image');
-  unlikeBtn.setAttribute('class', 'unlike-btn hidden');
+  unlikeBtn.setAttribute('class', 'unlike-btn');
   unlikeBtn.setAttribute('src', 'images/heart-fill.png');
   unlikeBtn.setAttribute('alt', 'Unlike Button');
   newColHalf.appendChild(unlikeBtn);
@@ -142,13 +171,22 @@ function createNewRecipe(searchEntry) {
   var p = document.createElement('p');
   p.textContent = data.recipe.instructions;
   newColHalf.appendChild(p);
+  if (!data.savedRecipe) {
+    unlikeBtn.classList.add('hidden');
+  } else {
+    likeBtn.classList.add('hidden');
+  }
   return cardContainer;
 }
 
 document.addEventListener('DOMContentLoaded', function (e) {
-  $recipeDisplay.append(createNewRecipe(data.recipe));
+  showDisplay();
   if (data.view === 'recipe-display') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.remove('hidden');
+    $recipeDisplay.append(createNewRecipe(data.recipe));
+  }
+  if (data.library) {
+    for (var i = 0; i < data.library.length; i++) {
+      $recipeCardList.prepend(createNewRecipe(data.library[i]));
+    }
   }
 });
