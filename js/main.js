@@ -55,6 +55,9 @@ function handleClick(e) {
   if (e.target.matches('.cancel-btn')) {
     $modalDisplay.classList.add('hidden');
   }
+  // if (e.target.matches('.confirm-btn')) {
+
+  // }
 }
 
 document.addEventListener('click', handleClick);
