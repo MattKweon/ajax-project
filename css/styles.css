@@ -150,6 +150,10 @@ span {
   line-height: 1.5;
 }
 
+.library-display h2 {
+  text-align: center;
+}
+
 @media screen and (min-width: 768px) {
   .recipe-card {
     max-width: 50rem;
