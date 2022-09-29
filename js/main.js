@@ -51,16 +51,23 @@ function handleClick(e) {
   }
   if (e.target.matches('.unlike-btn')) {
     $modalDisplay.classList.remove('hidden');
+    data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
+
   }
   if (e.target.matches('.cancel-btn')) {
     $modalDisplay.classList.add('hidden');
   }
   if (e.target.matches('.confirm-btn')) {
     $modalDisplay.classList.add('hidden');
-    var selectedCardId = Number($unlikeBtn.closest('li').getAttribute('data-id'));
+    var cardNodeList = document.querySelectorAll('.recipe-card');
     for (var i = 0; i < data.library.length; i++) {
-      if (selectedCardId === data.library[i].id) {
-        data.library.splice(selectedCardId - 1);
+      if (data.removeId === data.library[i].id) {
+        data.library.splice(i, 1);
+      }
+    }
+    for (var j = 0; j < cardNodeList.length; j++) {
+      if (data.removeId === Number(cardNodeList[j].getAttribute('data-id'))) {
+        cardNodeList[j].remove();
       }
     }
   }
