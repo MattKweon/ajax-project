@@ -21,7 +21,6 @@ body {
 }
 
 .logo-img {
-  width: auto;
   height: 70px;
 }
 
@@ -45,9 +44,9 @@ a {
 }
 
 #search-btn {
-  height: auto;
+  height: 25px;
   width: 25px;
-  margin-top: 1.5rem;
+  margin: 1.5rem 1rem 0;
 }
 
 .search-display {
@@ -127,7 +126,6 @@ span {
 }
 
 .like-btn {
-  height: auto;
   width: 2rem;
   position: absolute;
   right: 0.75rem;
@@ -135,15 +133,10 @@ span {
 }
 
 .unlike-btn {
-  height: auto;
   width: 2rem;
   position: absolute;
   right: 0.75rem;
   top: 2.4rem;
-}
-
-.recipe-content h3 {
-  font-weight: 500;
 }
 
 .recipe-content li {
@@ -185,23 +178,22 @@ span {
   width: 50%;
 }
 
-.cancel-btn {
+.cancel-btn,
+.confirm-btn {
   border: none;
   border-radius: 5px;
-  background-color: #b4d7eb;
   height: 2rem;
   margin: 1rem 0;
   cursor: pointer;
 }
 
+.cancel-btn {
+  background-color: #b4d7eb;
+}
+
 .confirm-btn {
-  border: none;
-  border-radius: 5px;
   background-color: red;
   color: white;
-  height: 2rem;
-  margin: 1rem 0;
-  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
