@@ -225,7 +225,7 @@ function createNewRecipe(entry) {
   return cardContainer;
 }
 
-document.addEventListener('DOMContentLoaded', function (e) {
+function beforeReloading(e) {
   showDisplay();
   if (data.view === 'recipe-view') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
@@ -235,4 +235,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
       $recipeCardList.prepend(createNewRecipe(data.library[i]));
     }
   }
-});
+}
+
+document.addEventListener('DOMContentLoaded', beforeReloading);
+
+window.addEventListener('pagehide', beforeReloading);
