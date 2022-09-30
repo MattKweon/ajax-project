@@ -1,9 +1,11 @@
+var $navBar = document.querySelector('.nav-bar');
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
 var $libraryDisplay = document.querySelector('.library-display');
 var $recipeCardList = document.querySelector('.recipe-card-list');
 var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
+var $modalDisplay = document.querySelector('.modal-display');
 var searchInput = '';
 
 function showDisplay() {
@@ -24,21 +26,12 @@ function showDisplay() {
   }
 }
 
-function handleClick(e) {
+function handleClickNavBar(e) {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
     showDisplay();
-  }
-  if (e.target.matches('.like-btn')) {
-    $likeBtn.classList.add('hidden');
-    $unlikeBtn.classList.remove('hidden');
-    data.savedRecipe = true;
-    data.recipe.id = data.nextEntryId;
-    data.library.push(data.recipe);
-    data.nextEntryId++;
-    $recipeCardList.prepend(createNewRecipe(data.library));
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
@@ -50,7 +43,53 @@ function handleClick(e) {
   }
 }
 
+$navBar.addEventListener('click', handleClickNavBar);
+
+function handleClick(e) {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
+  if (e.target.matches('.like-btn')) {
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
+    data.savedRecipe = true;
+    data.recipe.id = data.nextEntryId;
+    data.library.push(data.recipe);
+    data.nextEntryId++;
+    $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
+  }
+  if (e.target.matches('.unlike-btn')) {
+    $modalDisplay.classList.remove('hidden');
+    data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
+  }
+}
+
 document.addEventListener('click', handleClick);
+
+function handleClickModal(e) {
+  if (e.target.matches('.cancel-btn')) {
+    $modalDisplay.classList.add('hidden');
+  }
+  if (e.target.matches('.confirm-btn')) {
+    if (data.view === 'recipe-view') {
+      data.view = 'search-view';
+      showDisplay();
+    }
+    $modalDisplay.classList.add('hidden');
+    var cardNodeList = document.querySelectorAll('.recipe-card');
+    for (var i = 0; i < data.library.length; i++) {
+      if (data.removeId === data.library[i].id) {
+        data.library.splice(i, 1);
+      }
+    }
+    for (var j = 0; j < cardNodeList.length; j++) {
+      if (data.removeId === Number(cardNodeList[j].getAttribute('data-id'))) {
+        cardNodeList[j].remove();
+      }
+    }
+  }
+}
+
+$modalDisplay.addEventListener('click', handleClickModal);
 
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
@@ -73,11 +112,17 @@ function getCocktailImg(name) {
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
     data.recipe.imgUrl = imgUrl;
+    var searchEntry = {
+      imgUrl: data.recipe.imgUrl,
+      name: data.recipe.name,
+      ingredients: data.recipe.ingredients,
+      instructions: data.recipe.ingredients
+    };
     var $recipeCard = document.querySelector('.recipe-card');
     if ($recipeCard) {
       $recipeCard.remove();
     }
-    $recipeDisplay.append(createNewRecipe(data.recipe));
+    $recipeDisplay.append(createNewRecipe(searchEntry));
   });
   xhr.send();
 }
@@ -119,10 +164,11 @@ function titleCase(string) {
   return output;
 }
 
-function createNewRecipe(searchEntry) {
-  var ingredientList = data.recipe.ingredients;
-  var cardContainer = document.createElement('div');
-  cardContainer.setAttribute('class', 'container recipe-card');
+function createNewRecipe(entry) {
+  var ingredientList = entry.ingredients;
+  var cardContainer = document.createElement('li');
+  cardContainer.setAttribute('class', 'recipe-card container');
+  cardContainer.setAttribute('data-id', entry.id);
   var rowEl = document.createElement('div');
   rowEl.setAttribute('class', 'row');
   cardContainer.appendChild(rowEl);
@@ -134,14 +180,14 @@ function createNewRecipe(searchEntry) {
   colHalf.appendChild(imgContainer);
   var cocktailImg = document.createElement('img');
   cocktailImg.setAttribute('class', 'cocktail-img');
-  cocktailImg.setAttribute('src', data.recipe.imgUrl);
-  cocktailImg.setAttribute('alt', data.recipe.name);
+  cocktailImg.setAttribute('src', entry.imgUrl);
+  cocktailImg.setAttribute('alt', entry.name);
   imgContainer.appendChild(cocktailImg);
   var newColHalf = document.createElement('div');
-  newColHalf.setAttribute('class', 'col-half recipe-content');
+  newColHalf.setAttribute('class', 'recipe-content col-half');
   rowEl.appendChild(newColHalf);
   var cocktailName = document.createElement('h1');
-  cocktailName.textContent = titleCase(data.recipe.name);
+  cocktailName.textContent = titleCase(entry.name);
   newColHalf.appendChild(cocktailName);
   var likeBtn = document.createElement('input');
   likeBtn.setAttribute('type', 'image');
@@ -169,7 +215,7 @@ function createNewRecipe(searchEntry) {
   instructions.textContent = 'Instructions';
   newColHalf.appendChild(instructions);
   var p = document.createElement('p');
-  p.textContent = data.recipe.instructions;
+  p.textContent = entry.instructions;
   newColHalf.appendChild(p);
   if (!data.savedRecipe) {
     unlikeBtn.classList.add('hidden');
@@ -181,7 +227,7 @@ function createNewRecipe(searchEntry) {
 
 document.addEventListener('DOMContentLoaded', function (e) {
   showDisplay();
-  if (data.view === 'recipe-display') {
+  if (data.view === 'recipe-view') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
   }
   if (data.library) {
