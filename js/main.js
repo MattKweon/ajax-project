@@ -7,6 +7,7 @@ var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
 var $modalDisplay = document.querySelector('.modal-display');
 var searchInput = '';
+var $main = document.querySelector('main');
 
 function showDisplay() {
   if (data.view === 'search-view') {
@@ -94,7 +95,7 @@ $modalDisplay.addEventListener('click', handleClickModal);
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.api-ninjas.com/v1/cocktail?name=' + name);
-  xhr.setRequestHeader('X-Api-Key', '');
+  xhr.setRequestHeader('X-Api-Key', 'ujIh5vKEEre0q2ZePCZcoluwqMqEinW21MpI5zdf');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
@@ -107,7 +108,7 @@ function getCocktailData(name) {
 function getCocktailImg(name) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pexels.com/v1/search?query=' + name + ' cocktail');
-  xhr.setRequestHeader('Authorization', '');
+  xhr.setRequestHeader('Authorization', '563492ad6f917000010000013f401851feb74faca5ffe16effdf2403');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
@@ -118,11 +119,15 @@ function getCocktailImg(name) {
       ingredients: data.recipe.ingredients,
       instructions: data.recipe.ingredients
     };
+    var $ldsCircle = document.querySelector('.lds-circle');
     var $recipeCard = document.querySelector('.recipe-card');
     if ($recipeCard) {
       $recipeCard.remove();
     }
     $recipeDisplay.append(createNewRecipe(searchEntry));
+    if ($recipeCard) {
+      $ldsCircle.remove();
+    }
   });
   xhr.send();
 }
@@ -136,6 +141,7 @@ $searchForm.addEventListener('submit', function (e) {
   data.view = 'recipe-view';
   data.savedRecipe = false;
   showDisplay();
+  $main.prepend(createSpinner());
   getCocktailData(searchInput);
 });
 
@@ -162,6 +168,14 @@ function titleCase(string) {
   }
   output += string[string.length - 1][0].toUpperCase() + string[string.length - 1].slice(1).toLowerCase();
   return output;
+}
+
+function createSpinner() {
+  var spinner = document.createElement('div');
+  spinner.setAttribute('class', 'lds-circle');
+  var childDiv = document.createElement('div');
+  spinner.appendChild(childDiv);
+  return spinner;
 }
 
 function createNewRecipe(entry) {
