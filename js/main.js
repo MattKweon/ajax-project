@@ -30,6 +30,14 @@ function showDisplay() {
 function handleClickNavBar(e) {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
+  var $recipeCard = document.querySelector('.recipe-card');
+  var $noRecipeMsg = document.querySelector('.no-recipe-msg');
+  if ($recipeCard) {
+    $recipeCard.remove();
+  }
+  if ($noRecipeMsg) {
+    $noRecipeMsg.remove();
+  }
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
     showDisplay();
@@ -61,6 +69,10 @@ function handleClick(e) {
   if (e.target.matches('.unlike-btn')) {
     $modalDisplay.classList.remove('hidden');
     data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
+  }
+  if (e.target.matches('#search-btn')) {
+    data.view = 'search-view';
+    showDisplay();
   }
 }
 
@@ -97,10 +109,19 @@ function getCocktailData(name) {
   xhr.open('GET', 'https://api.api-ninjas.com/v1/cocktail?name=' + name);
   xhr.setRequestHeader('X-Api-Key', 'ujIh5vKEEre0q2ZePCZcoluwqMqEinW21MpI5zdf');
   xhr.responseType = 'json';
+  xhr.addEventListener('error', function () {
+    networkErrorMsg();
+  });
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
     $searchForm.reset();
-    getCocktailImg(searchInput);
+    if (data.recipe === undefined) {
+      var $ldsCircle = document.querySelector('.lds-circle');
+      noRecipeMsg();
+      $ldsCircle.remove();
+    } else {
+      getCocktailImg(searchInput);
+    }
   });
   xhr.send();
 }
@@ -120,14 +141,8 @@ function getCocktailImg(name) {
       instructions: data.recipe.ingredients
     };
     var $ldsCircle = document.querySelector('.lds-circle');
-    var $recipeCard = document.querySelector('.recipe-card');
-    if ($recipeCard) {
-      $recipeCard.remove();
-    }
     $recipeDisplay.append(createNewRecipe(searchEntry));
-    if ($recipeCard) {
-      $ldsCircle.remove();
-    }
+    $ldsCircle.remove();
   });
   xhr.send();
 }
@@ -172,10 +187,33 @@ function titleCase(string) {
 
 function createSpinner() {
   var spinner = document.createElement('div');
+  spinner.setAttribute('class', 'load-container');
   spinner.setAttribute('class', 'lds-circle');
   var childDiv = document.createElement('div');
   spinner.appendChild(childDiv);
   return spinner;
+
+}
+
+function noRecipeMsg() {
+  var msg = document.createElement('div');
+  msg.setAttribute('class', 'no-recipe-msg');
+  var noRecipe = document.createElement('h1');
+  noRecipe.textContent = 'Recipe not found';
+  msg.appendChild(noRecipe);
+  var lookForNew = document.createElement('h4');
+  lookForNew.textContent = 'click the search icon to look for a new recipe';
+  msg.appendChild(lookForNew);
+  $main.appendChild(msg);
+}
+
+function networkErrorMsg() {
+  var networkError = document.createElement('div');
+  networkError.setAttribute('class', 'network-error-msg');
+  var noConnection = document.createElement('p');
+  noConnection.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
+  networkError.appendChild(noConnection);
+  $main.appendChild(networkError);
 }
 
 function createNewRecipe(entry) {

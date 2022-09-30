@@ -196,6 +196,18 @@ span {
   color: white;
 }
 
+.no-recipe-msg {
+  text-align: center;
+  margin-top: 5rem;
+  font-weight: 300;
+}
+
+.network-error-msg {
+  max-width: 20rem;
+  min-width: 20rem;
+  margin: 2rem;
+}
+
 @media screen and (min-width: 768px) {
   .recipe-card {
     max-width: 50rem;
