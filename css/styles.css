@@ -3,10 +3,6 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-ul {
-  padding: 0;
-}
-
 .flex {
   display: flex;
 }
@@ -156,6 +152,10 @@ span {
 
 .library-display h2 {
   text-align: center;
+}
+
+.recipe-car-list {
+  padding: 0;
 }
 
 .modal-display {
