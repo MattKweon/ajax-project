@@ -22,6 +22,7 @@ body {
 
 .logo-img {
   height: 70px;
+  margin-left: 1rem;
 }
 
 .logo-name {
@@ -194,6 +195,18 @@ span {
 .confirm-btn {
   background-color: red;
   color: white;
+}
+
+.no-recipe-msg {
+  text-align: center;
+  margin-top: 5rem;
+  font-weight: 300;
+}
+
+.network-error-msg {
+  max-width: 20rem;
+  min-width: 20rem;
+  margin: 2rem;
 }
 
 @media screen and (min-width: 768px) {
