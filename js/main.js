@@ -94,7 +94,7 @@ $modalDisplay.addEventListener('click', handleClickModal);
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.api-ninjas.com/v1/cocktail?name=' + name);
-  xhr.setRequestHeader('X-Api-Key', 'tsY43L3Lh5SZ/WR5FQznyA==QerTD0YdjkWIbYLP');
+  xhr.setRequestHeader('X-Api-Key', '');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
@@ -107,7 +107,7 @@ function getCocktailData(name) {
 function getCocktailImg(name) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pexels.com/v1/search?query=' + name + ' cocktail');
-  xhr.setRequestHeader('Authorization', '563492ad6f917000010000013f401851feb74faca5ffe16effdf2403');
+  xhr.setRequestHeader('Authorization', '');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var imgUrl = xhr.response.photos[0].src.original;
@@ -225,7 +225,7 @@ function createNewRecipe(entry) {
   return cardContainer;
 }
 
-document.addEventListener('DOMContentLoaded', function (e) {
+function beforeReloading(e) {
   showDisplay();
   if (data.view === 'recipe-view') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
@@ -235,4 +235,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
       $recipeCardList.prepend(createNewRecipe(data.library[i]));
     }
   }
-});
+}
+
+document.addEventListener('DOMContentLoaded', beforeReloading);
+
+window.addEventListener('pagehide', beforeReloading);
