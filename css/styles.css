@@ -55,7 +55,7 @@ a {
   width: 100%;
   background-image:
     url(
-      "/images/search-background.png"
+      "../images/search-background.png"
     );
   background-size: cover;
   background-position: center;
