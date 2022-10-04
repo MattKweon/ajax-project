@@ -27,16 +27,11 @@ function switchDisplay() {
   }
 }
 
-function switchHeartBtn(status) {
+function switchHeartBtn() {
   var $likeBtn = document.querySelector('.like-btn');
   var $unlikeBtn = document.querySelector('.unlike-btn');
-  if (status === 'like') {
-    $likeBtn.classList.add('hidden');
-    $unlikeBtn.classList.remove('hidden');
-  }
-  // if (status === 'unlike') {
-  //   $likeBtn.classList.remove
-  // }
+  $likeBtn.classList.add('hidden');
+  $unlikeBtn.classList.remove('hidden');
 }
 
 function switchModalDisplay(status) {
@@ -74,7 +69,7 @@ $navBar.addEventListener('click', handleClickNavBar);
 
 function handleClickHeartBtn(e) {
   if (e.target.matches('.like-btn')) {
-    switchHeartBtn('like');
+    switchHeartBtn();
     data.savedRecipe = true;
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
@@ -92,19 +87,21 @@ document.addEventListener('click', handleClickHeartBtn);
 function handleClickModal(e) {
   switchModalDisplay('off');
   if (e.target.matches('.confirm-btn')) {
+    var $cardNodeList = document.querySelectorAll('.recipe-card');
     if (data.view === 'recipe-view') {
       data.view = 'search-view';
       switchDisplay();
+      data.library.pop();
+      $cardNodeList[$cardNodeList.length - 2].remove();
     }
-    var cardNodeList = document.querySelectorAll('.recipe-card');
     for (var i = 0; i < data.library.length; i++) {
       if (data.removeId === data.library[i].id) {
         data.library.splice(i, 1);
       }
     }
-    for (var j = 0; j < cardNodeList.length; j++) {
-      if (data.removeId === Number(cardNodeList[j].getAttribute('data-id'))) {
-        cardNodeList[j].remove();
+    for (var j = 0; j < $cardNodeList.length; j++) {
+      if (data.removeId === Number($cardNodeList[j].getAttribute('data-id'))) {
+        $cardNodeList[j].remove();
       }
     }
   }
@@ -200,7 +197,6 @@ function createSpinner() {
   var childDiv = document.createElement('div');
   spinner.appendChild(childDiv);
   return spinner;
-
 }
 
 function noRecipeMsg() {
