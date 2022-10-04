@@ -9,7 +9,7 @@ var $searchBar = document.querySelector('#search-bar');
 var $modalDisplay = document.querySelector('.modal-display');
 var searchInput = '';
 
-function showDisplay() {
+function switchDisplay() {
   if (data.view === 'search-view') {
     $searchDisplay.classList.remove('hidden');
     $recipeDisplay.classList.add('hidden');
@@ -53,11 +53,11 @@ function handleClickNavBar(e) {
   data.recipe = null;
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
-    showDisplay();
+    switchDisplay();
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
-    showDisplay();
+    switchDisplay();
   }
 }
 
@@ -87,7 +87,7 @@ function handleClickModal(e) {
   if (e.target.matches('.confirm-btn')) {
     if (data.view === 'recipe-view') {
       data.view = 'search-view';
-      showDisplay();
+      switchDisplay();
     }
     $modalDisplay.classList.add('hidden');
     var cardNodeList = document.querySelectorAll('.recipe-card');
@@ -157,7 +157,7 @@ $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   data.view = 'recipe-view';
   data.savedRecipe = false;
-  showDisplay();
+  switchDisplay();
   $main.prepend(createSpinner());
   getCocktailData(searchInput);
 });
@@ -280,7 +280,7 @@ function createNewRecipe(entry) {
 }
 
 function beforeReloading(e) {
-  showDisplay();
+  switchDisplay();
   if (data.view === 'recipe-view') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
   }
