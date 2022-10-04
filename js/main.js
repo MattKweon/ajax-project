@@ -63,7 +63,7 @@ function handleClickNavBar(e) {
 
 $navBar.addEventListener('click', handleClickNavBar);
 
-function handleClick(e) {
+function handleClickHeartBtn(e) {
   if (e.target.matches('.like-btn')) {
     switchHeartBtn('like');
     data.savedRecipe = true;
@@ -78,7 +78,7 @@ function handleClick(e) {
   }
 }
 
-document.addEventListener('click', handleClick);
+document.addEventListener('click', handleClickHeartBtn);
 
 function handleClickModal(e) {
   if (e.target.matches('.cancel-btn')) {
