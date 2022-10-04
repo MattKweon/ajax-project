@@ -1,13 +1,13 @@
+var $main = document.querySelector('main');
 var $navBar = document.querySelector('.nav-bar');
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
 var $libraryDisplay = document.querySelector('.library-display');
 var $recipeCardList = document.querySelector('.recipe-card-list');
-var $searchBar = document.querySelector('#search-bar');
 var $searchForm = document.querySelector('.search-form');
+var $searchBar = document.querySelector('#search-bar');
 var $modalDisplay = document.querySelector('.modal-display');
 var searchInput = '';
-var $main = document.querySelector('main');
 
 function showDisplay() {
   if (data.view === 'search-view') {
@@ -28,16 +28,19 @@ function showDisplay() {
 }
 
 function handleClickNavBar(e) {
-  var $likeBtn = document.querySelector('.like-btn');
-  var $unlikeBtn = document.querySelector('.unlike-btn');
+  // var $likeBtn = document.querySelector('.like-btn');
+  // var $unlikeBtn = document.querySelector('.unlike-btn');
   var $recipeCard = document.querySelector('.recipe-card');
   var $noRecipeMsg = document.querySelector('.no-recipe-msg');
-  if ($recipeCard) {
-    $recipeCard.remove();
+  if (data.recipe) {
+    if ($recipeCard) {
+      $recipeCard.remove();
+    }
+    if ($noRecipeMsg) {
+      $noRecipeMsg.remove();
+    }
   }
-  if ($noRecipeMsg) {
-    $noRecipeMsg.remove();
-  }
+  data.recipe = null;
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
     showDisplay();
@@ -45,10 +48,10 @@ function handleClickNavBar(e) {
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
     showDisplay();
-    if ($likeBtn) {
-      $likeBtn.classList.add('hidden');
-      $unlikeBtn.classList.remove('hidden');
-    }
+    // if ($likeBtn) {
+    //   $likeBtn.classList.add('hidden');
+    //   $unlikeBtn.classList.remove('hidden');
+    // }
   }
 }
 
