@@ -4,9 +4,9 @@ var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
 var $libraryDisplay = document.querySelector('.library-display');
 var $recipeCardList = document.querySelector('.recipe-card-list');
+var $modalDisplay = document.querySelector('.modal-display');
 var $searchForm = document.querySelector('.search-form');
 var $searchBar = document.querySelector('#search-bar');
-var $modalDisplay = document.querySelector('.modal-display');
 var searchInput = '';
 
 function switchDisplay() {
@@ -37,6 +37,15 @@ function switchHeartBtn(status) {
   // if (status === 'unlike') {
   //   $likeBtn.classList.remove
   // }
+}
+
+function switchModalDisplay(status) {
+  if (status === 'on') {
+    $modalDisplay.classList.remove('hidden');
+  }
+  if (status === 'off') {
+    $modalDisplay.classList.add('hidden');
+  }
 }
 
 function handleClickNavBar(e) {
@@ -73,7 +82,7 @@ function handleClickHeartBtn(e) {
     $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
   }
   if (e.target.matches('.unlike-btn')) {
-    $modalDisplay.classList.remove('hidden');
+    switchModalDisplay('on');
     data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
   }
 }
@@ -81,15 +90,12 @@ function handleClickHeartBtn(e) {
 document.addEventListener('click', handleClickHeartBtn);
 
 function handleClickModal(e) {
-  if (e.target.matches('.cancel-btn')) {
-    $modalDisplay.classList.add('hidden');
-  }
+  switchModalDisplay('off');
   if (e.target.matches('.confirm-btn')) {
     if (data.view === 'recipe-view') {
       data.view = 'search-view';
       switchDisplay();
     }
-    $modalDisplay.classList.add('hidden');
     var cardNodeList = document.querySelectorAll('.recipe-card');
     for (var i = 0; i < data.library.length; i++) {
       if (data.removeId === data.library[i].id) {
