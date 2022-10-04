@@ -27,9 +27,19 @@ function showDisplay() {
   }
 }
 
+function switchHeartBtn(status) {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
+  if (status === 'like') {
+    $likeBtn.classList.add('hidden');
+    $unlikeBtn.classList.remove('hidden');
+  }
+  // if (status === 'unlike') {
+  //   $likeBtn.classList.remove
+  // }
+}
+
 function handleClickNavBar(e) {
-  // var $likeBtn = document.querySelector('.like-btn');
-  // var $unlikeBtn = document.querySelector('.unlike-btn');
   var $recipeCard = document.querySelector('.recipe-card');
   var $noRecipeMsg = document.querySelector('.no-recipe-msg');
   if (data.recipe) {
@@ -48,21 +58,14 @@ function handleClickNavBar(e) {
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
     showDisplay();
-    // if ($likeBtn) {
-    //   $likeBtn.classList.add('hidden');
-    //   $unlikeBtn.classList.remove('hidden');
-    // }
   }
 }
 
 $navBar.addEventListener('click', handleClickNavBar);
 
 function handleClick(e) {
-  var $likeBtn = document.querySelector('.like-btn');
-  var $unlikeBtn = document.querySelector('.unlike-btn');
   if (e.target.matches('.like-btn')) {
-    $likeBtn.classList.add('hidden');
-    $unlikeBtn.classList.remove('hidden');
+    switchHeartBtn('like');
     data.savedRecipe = true;
     data.recipe.id = data.nextEntryId;
     data.library.push(data.recipe);
