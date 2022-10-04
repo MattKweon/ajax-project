@@ -76,10 +76,6 @@ function handleClick(e) {
     $modalDisplay.classList.remove('hidden');
     data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
   }
-  if (e.target.matches('#search-btn')) {
-    data.view = 'search-view';
-    showDisplay();
-  }
 }
 
 document.addEventListener('click', handleClick);
