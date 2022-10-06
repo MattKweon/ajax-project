@@ -42,6 +42,8 @@ function handleClickHeartBtn(e) {
     data.library.push(data.recipe);
     data.nextEntryId++;
     $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
+    data.view = 'library-view';
+    switchDisplay();
   }
   if (e.target.matches('.unlike-btn')) {
     switchModalDisplay('on');
@@ -114,7 +116,7 @@ function getCocktailImg(name) {
       imgUrl: data.recipe.imgUrl,
       name: data.recipe.name,
       ingredients: data.recipe.ingredients,
-      instructions: data.recipe.ingredients
+      instructions: data.recipe.instructions
     };
     $recipeDisplay.append(createNewRecipe(searchEntry));
     $ldsCircle.classList.add('hidden');
