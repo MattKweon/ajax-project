@@ -8,40 +8,7 @@ var $modalDisplay = document.querySelector('.modal-display');
 var $searchForm = document.querySelector('.search-form');
 var $searchBar = document.querySelector('#search-bar');
 var searchInput = '';
-
-function switchDisplay() {
-  if (data.view === 'search-view') {
-    $searchDisplay.classList.remove('hidden');
-    $recipeDisplay.classList.add('hidden');
-    $libraryDisplay.classList.add('hidden');
-  }
-  if (data.view === 'recipe-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.remove('hidden');
-    $libraryDisplay.classList.add('hidden');
-  }
-  if (data.view === 'library-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.add('hidden');
-    $libraryDisplay.classList.remove('hidden');
-  }
-}
-
-function switchHeartBtn() {
-  var $likeBtn = document.querySelector('.like-btn');
-  var $unlikeBtn = document.querySelector('.unlike-btn');
-  $likeBtn.classList.add('hidden');
-  $unlikeBtn.classList.remove('hidden');
-}
-
-function switchModalDisplay(status) {
-  if (status === 'on') {
-    $modalDisplay.classList.remove('hidden');
-  }
-  if (status === 'off') {
-    $modalDisplay.classList.add('hidden');
-  }
-}
+var $networkErrorMsg = document.querySelector('.network-error-msg');
 
 function handleClickNavBar(e) {
   var $recipeCard = document.querySelector('.recipe-card');
@@ -115,7 +82,7 @@ function getCocktailData(name) {
   xhr.setRequestHeader('X-Api-Key', 'ujIh5vKEEre0q2ZePCZcoluwqMqEinW21MpI5zdf');
   xhr.responseType = 'json';
   xhr.addEventListener('error', function () {
-    networkErrorMsg();
+    $networkErrorMsg.classList.remove('hidden');
   });
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
@@ -165,6 +132,56 @@ $searchForm.addEventListener('submit', function (e) {
   getCocktailData(searchInput);
 });
 
+function beforeReloading(e) {
+  switchDisplay();
+  if (data.view === 'recipe-view') {
+    $recipeDisplay.append(createNewRecipe(data.recipe));
+  }
+  if (data.library) {
+    for (var i = 0; i < data.library.length; i++) {
+      $recipeCardList.prepend(createNewRecipe(data.library[i]));
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', beforeReloading);
+
+window.addEventListener('pagehide', beforeReloading);
+
+function switchDisplay() {
+  if (data.view === 'search-view') {
+    $searchDisplay.classList.remove('hidden');
+    $recipeDisplay.classList.add('hidden');
+    $libraryDisplay.classList.add('hidden');
+  }
+  if (data.view === 'recipe-view') {
+    $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.remove('hidden');
+    $libraryDisplay.classList.add('hidden');
+  }
+  if (data.view === 'library-view') {
+    $searchDisplay.classList.add('hidden');
+    $recipeDisplay.classList.add('hidden');
+    $libraryDisplay.classList.remove('hidden');
+  }
+}
+
+function switchHeartBtn() {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
+  $likeBtn.classList.add('hidden');
+  $unlikeBtn.classList.remove('hidden');
+}
+
+function switchModalDisplay(status) {
+  if (status === 'on') {
+    $modalDisplay.classList.remove('hidden');
+  }
+  if (status === 'off') {
+    $modalDisplay.classList.add('hidden');
+  }
+}
+
 function titleCase(string) {
   var output = '';
   string = string.toLowerCase().split(' ');
@@ -209,15 +226,6 @@ function noRecipeMsg() {
   lookForNew.textContent = 'click the search icon to look for a new recipe';
   msg.appendChild(lookForNew);
   $main.appendChild(msg);
-}
-
-function networkErrorMsg() {
-  var networkError = document.createElement('div');
-  networkError.setAttribute('class', 'network-error-msg');
-  var noConnection = document.createElement('p');
-  noConnection.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
-  networkError.appendChild(noConnection);
-  $main.appendChild(networkError);
 }
 
 function createNewRecipe(entry) {
@@ -280,19 +288,3 @@ function createNewRecipe(entry) {
   }
   return cardContainer;
 }
-
-function beforeReloading(e) {
-  switchDisplay();
-  if (data.view === 'recipe-view') {
-    $recipeDisplay.append(createNewRecipe(data.recipe));
-  }
-  if (data.library) {
-    for (var i = 0; i < data.library.length; i++) {
-      $recipeCardList.prepend(createNewRecipe(data.library[i]));
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', beforeReloading);
-
-window.addEventListener('pagehide', beforeReloading);
