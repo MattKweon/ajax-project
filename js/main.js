@@ -13,8 +13,13 @@ var $noRecipeMsg = document.querySelector('.no-recipe-msg');
 var $here = document.querySelector('#here');
 
 function handleClickNavBar(e) {
+  var $recipeCard = document.querySelector('.recipe-card');
   if ($noRecipeMsg) {
     $noRecipeMsg.classList.add('hidden');
+  }
+  if (data.recipe) {
+    data.recipe = null;
+    $recipeCard.remove();
   }
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
@@ -58,6 +63,7 @@ function handleClickModal(e) {
       switchDisplay();
       data.library.pop();
       $cardNodeList[0].remove();
+      data.recipe = null;
     }
     for (var i = 0; i < data.library.length; i++) {
       if (data.removeId === data.library[i].id) {
@@ -77,6 +83,8 @@ $modalDisplay.addEventListener('click', handleClickModal);
 $here.addEventListener('click', function (e) {
   data.view = 'search-view';
   switchDisplay();
+  $noRecipeMsg.classList.add('hidden');
+  data.recipe = null;
 });
 
 function getCocktailData(name) {
