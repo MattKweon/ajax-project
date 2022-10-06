@@ -50,9 +50,9 @@ function handleClickNavBar(e) {
     if ($recipeCard) {
       $recipeCard.remove();
     }
-    if ($noRecipeMsg) {
-      $noRecipeMsg.remove();
-    }
+  }
+  if ($noRecipeMsg) {
+    $noRecipeMsg.remove();
   }
   data.recipe = null;
   if (e.target.matches('#search-btn')) {
@@ -92,7 +92,7 @@ function handleClickModal(e) {
       data.view = 'search-view';
       switchDisplay();
       data.library.pop();
-      $cardNodeList[$cardNodeList.length - 2].remove();
+      $cardNodeList[0].remove();
     }
     for (var i = 0; i < data.library.length; i++) {
       if (data.removeId === data.library[i].id) {
