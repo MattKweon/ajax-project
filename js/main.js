@@ -126,8 +126,14 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
+  for (var i = 0; i < data.library.length; i++) {
+    if (data.library[i].name === searchInput) {
+      data.savedRecipe = true;
+    } else {
+      data.savedRecipe = false;
+    }
+  }
   data.view = 'recipe-view';
-  data.savedRecipe = false;
   switchDisplay();
   $ldsCircle.classList.remove('hidden');
   getCocktailData(searchInput);
