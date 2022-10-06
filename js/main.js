@@ -8,6 +8,7 @@ var $modalDisplay = document.querySelector('.modal-display');
 var $searchForm = document.querySelector('.search-form');
 var $searchBar = document.querySelector('#search-bar');
 var searchInput = '';
+var $ldsCircle = document.querySelector('.lds-circle');
 var $networkErrorMsg = document.querySelector('.network-error-msg');
 
 function handleClickNavBar(e) {
@@ -88,9 +89,8 @@ function getCocktailData(name) {
     data.recipe = xhr.response[0];
     $searchForm.reset();
     if (data.recipe === undefined) {
-      var $ldsCircle = document.querySelector('.lds-circle');
       noRecipeMsg();
-      $ldsCircle.remove();
+      $ldsCircle.classList.add('hidden');
     } else {
       getCocktailImg(searchInput);
     }
@@ -112,9 +112,8 @@ function getCocktailImg(name) {
       ingredients: data.recipe.ingredients,
       instructions: data.recipe.ingredients
     };
-    var $ldsCircle = document.querySelector('.lds-circle');
     $recipeDisplay.append(createNewRecipe(searchEntry));
-    $ldsCircle.remove();
+    $ldsCircle.classList.add('hidden');
   });
   xhr.send();
 }
@@ -128,7 +127,7 @@ $searchForm.addEventListener('submit', function (e) {
   data.view = 'recipe-view';
   data.savedRecipe = false;
   switchDisplay();
-  $main.prepend(createSpinner());
+  $ldsCircle.classList.remove('hidden');
   getCocktailData(searchInput);
 });
 
@@ -205,15 +204,6 @@ function titleCase(string) {
   }
   output += string[string.length - 1][0].toUpperCase() + string[string.length - 1].slice(1).toLowerCase();
   return output;
-}
-
-function createSpinner() {
-  var spinner = document.createElement('div');
-  spinner.setAttribute('class', 'load-container');
-  spinner.setAttribute('class', 'lds-circle');
-  var childDiv = document.createElement('div');
-  spinner.appendChild(childDiv);
-  return spinner;
 }
 
 function noRecipeMsg() {
