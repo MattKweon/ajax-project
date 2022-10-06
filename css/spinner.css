@@ -1,8 +1,9 @@
 .lds-circle {
   display: inline-block;
-  display: flex;
   transform: translateZ(1px);
-  justify-content: center;
+  position: fixed;
+  left: 40%;
+  top: 18rem;
 }
 
 .lds-circle > div {
