@@ -48,7 +48,7 @@ function handleClickHeartBtn(e) {
     switchDisplay();
   }
   if (e.target.matches('.unlike-btn')) {
-    switchModalDisplay('on');
+    $modalDisplay.classList.remove('hidden');
     data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
   }
 }
@@ -56,7 +56,7 @@ function handleClickHeartBtn(e) {
 document.addEventListener('click', handleClickHeartBtn);
 
 function handleClickModal(e) {
-  switchModalDisplay('off');
+  $modalDisplay.classList.add('hidden');
   if (e.target.matches('.confirm-btn')) {
     var $cardNodeList = document.querySelectorAll('.recipe-card');
     if (data.view === 'recipe-view') {
@@ -187,15 +187,6 @@ function switchHeartBtn() {
   var $unlikeBtn = document.querySelector('.unlike-btn');
   $likeBtn.classList.add('hidden');
   $unlikeBtn.classList.remove('hidden');
-}
-
-function switchModalDisplay(status) {
-  if (status === 'on') {
-    $modalDisplay.classList.remove('hidden');
-  }
-  if (status === 'off') {
-    $modalDisplay.classList.add('hidden');
-  }
 }
 
 function titleCase(string) {
