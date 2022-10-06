@@ -1,5 +1,5 @@
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .container {
@@ -9,7 +9,6 @@
 
 .row {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .col-half,

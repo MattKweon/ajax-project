@@ -3,12 +3,8 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-.flex {
-  display: flex;
-}
-
-.no-wrap {
-  flex-wrap: nowrap;
+.wrap {
+  flex-wrap: wrap;
 }
 
 .right-align {
@@ -123,6 +119,7 @@ span {
 
 .recipe-content h1 {
   font-weight: 400;
+  text-decoration: underline;
 }
 
 .like-btn {

@@ -224,7 +224,7 @@ function createNewRecipe(entry) {
   cardContainer.setAttribute('class', 'recipe-card container');
   cardContainer.setAttribute('data-id', entry.id);
   var rowEl = document.createElement('div');
-  rowEl.setAttribute('class', 'row');
+  rowEl.setAttribute('class', 'row wrap');
   cardContainer.appendChild(rowEl);
   var colHalf = document.createElement('div');
   colHalf.setAttribute('class', 'col-half');
