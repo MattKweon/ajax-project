@@ -13,16 +13,9 @@ var $noRecipeMsg = document.querySelector('.no-recipe-msg');
 var $here = document.querySelector('#here');
 
 function handleClickNavBar(e) {
-  var $recipeCard = document.querySelector('.recipe-card');
-  if (data.recipe) {
-    if ($recipeCard) {
-      $recipeCard.remove();
-    }
-  }
   if ($noRecipeMsg) {
     $noRecipeMsg.classList.add('hidden');
   }
-  data.recipe = null;
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
   }
@@ -35,6 +28,7 @@ function handleClickNavBar(e) {
 $navBar.addEventListener('click', handleClickNavBar);
 
 function handleClickHeartBtn(e) {
+  var $recipeCard = document.querySelector('.recipe-card');
   if (e.target.matches('.like-btn')) {
     switchHeartBtn();
     data.savedRecipe = true;
@@ -42,6 +36,8 @@ function handleClickHeartBtn(e) {
     data.library.push(data.recipe);
     data.nextEntryId++;
     $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
+    data.recipe = null;
+    $recipeCard.remove();
     data.view = 'library-view';
     switchDisplay();
   }
