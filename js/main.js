@@ -8,7 +8,7 @@ var $modalDisplay = document.querySelector('.modal-display');
 var $searchForm = document.querySelector('.search-form');
 var $searchBar = document.querySelector('#search-bar');
 var searchInput = '';
-var $ldsCircle = document.querySelector('.lds-circle');
+var $ldsRing = document.querySelector('.lds-ring');
 var $networkErrorMsg = document.querySelector('.network-error-msg');
 
 function handleClickNavBar(e) {
@@ -90,7 +90,7 @@ function getCocktailData(name) {
     $searchForm.reset();
     if (data.recipe === undefined) {
       noRecipeMsg();
-      $ldsCircle.classList.add('hidden');
+      $ldsRing.classList.add('hidden');
     } else {
       getCocktailImg(searchInput);
     }
@@ -113,7 +113,7 @@ function getCocktailImg(name) {
       instructions: data.recipe.ingredients
     };
     $recipeDisplay.append(createNewRecipe(searchEntry));
-    $ldsCircle.classList.add('hidden');
+    $ldsRing.classList.add('hidden');
   });
   xhr.send();
 }
@@ -127,7 +127,7 @@ $searchForm.addEventListener('submit', function (e) {
   data.view = 'recipe-view';
   data.savedRecipe = false;
   switchDisplay();
-  $ldsCircle.classList.remove('hidden');
+  $ldsRing.classList.remove('hidden');
   getCocktailData(searchInput);
 });
 
