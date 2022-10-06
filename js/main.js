@@ -14,6 +14,7 @@ var $here = document.querySelector('#here');
 
 function handleClickNavBar(e) {
   var $recipeCard = document.querySelector('.recipe-card');
+  data.savedRecipe = true;
   if ($noRecipeMsg) {
     $noRecipeMsg.classList.add('hidden');
   }
@@ -134,11 +135,11 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
+  data.savedRecipe = false;
   for (var i = 0; i < data.library.length; i++) {
     if (data.library[i].name === searchInput) {
       data.savedRecipe = true;
-    } else {
-      data.savedRecipe = false;
+      break;
     }
   }
   data.view = 'recipe-view';
@@ -275,10 +276,10 @@ function createNewRecipe(entry) {
   var p = document.createElement('p');
   p.textContent = entry.instructions;
   newColHalf.appendChild(p);
-  if (!data.savedRecipe) {
-    unlikeBtn.classList.add('hidden');
-  } else {
+  if (data.savedRecipe) {
     likeBtn.classList.add('hidden');
+  } else {
+    unlikeBtn.classList.add('hidden');
   }
   return cardContainer;
 }
