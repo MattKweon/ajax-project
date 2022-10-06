@@ -1,4 +1,3 @@
-var $main = document.querySelector('main');
 var $navBar = document.querySelector('.nav-bar');
 var $searchDisplay = document.querySelector('.search-display');
 var $recipeDisplay = document.querySelector('.recipe-display');
@@ -10,27 +9,27 @@ var $searchBar = document.querySelector('#search-bar');
 var searchInput = '';
 var $ldsRing = document.querySelector('.lds-ring');
 var $networkErrorMsg = document.querySelector('.network-error-msg');
+var $noRecipeMsg = document.querySelector('.no-recipe-msg');
+var $here = document.querySelector('#here');
 
 function handleClickNavBar(e) {
   var $recipeCard = document.querySelector('.recipe-card');
-  var $noRecipeMsg = document.querySelector('.no-recipe-msg');
   if (data.recipe) {
     if ($recipeCard) {
       $recipeCard.remove();
     }
   }
   if ($noRecipeMsg) {
-    $noRecipeMsg.remove();
+    $noRecipeMsg.classList.add('hidden');
   }
   data.recipe = null;
   if (e.target.matches('#search-btn')) {
     data.view = 'search-view';
-    switchDisplay();
   }
   if (e.target.matches('#library-tab')) {
     data.view = 'library-view';
-    switchDisplay();
   }
+  switchDisplay();
 }
 
 $navBar.addEventListener('click', handleClickNavBar);
@@ -77,6 +76,11 @@ function handleClickModal(e) {
 
 $modalDisplay.addEventListener('click', handleClickModal);
 
+$here.addEventListener('click', function (e) {
+  data.view = 'search-view';
+  switchDisplay();
+});
+
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.api-ninjas.com/v1/cocktail?name=' + name);
@@ -89,7 +93,7 @@ function getCocktailData(name) {
     data.recipe = xhr.response[0];
     $searchForm.reset();
     if (data.recipe === undefined) {
-      noRecipeMsg();
+      $noRecipeMsg.classList.remove('hidden');
       $ldsRing.classList.add('hidden');
     } else {
       getCocktailImg(searchInput);
@@ -204,18 +208,6 @@ function titleCase(string) {
   }
   output += string[string.length - 1][0].toUpperCase() + string[string.length - 1].slice(1).toLowerCase();
   return output;
-}
-
-function noRecipeMsg() {
-  var msg = document.createElement('div');
-  msg.setAttribute('class', 'no-recipe-msg');
-  var noRecipe = document.createElement('h1');
-  noRecipe.textContent = 'Recipe not found';
-  msg.appendChild(noRecipe);
-  var lookForNew = document.createElement('h4');
-  lookForNew.textContent = 'click the search icon to look for a new recipe';
-  msg.appendChild(lookForNew);
-  $main.appendChild(msg);
 }
 
 function createNewRecipe(entry) {
