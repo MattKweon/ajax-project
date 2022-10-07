@@ -1,7 +1,6 @@
 var $navBar = document.querySelector('.nav-bar');
-var $searchDisplay = document.querySelector('.search-display');
-var $recipeDisplay = document.querySelector('.recipe-display');
-var $libraryDisplay = document.querySelector('.library-display');
+var $view = document.querySelectorAll('.display');
+var $recipeDisplay = document.querySelector('[data-view=recipe]');
 var $recipeCardList = document.querySelector('.recipe-card-list');
 var $modalDisplay = document.querySelector('.modal-display');
 var $searchForm = document.querySelector('.search-form');
@@ -23,10 +22,10 @@ function handleClickNavBar(e) {
     $recipeCard.remove();
   }
   if (e.target.matches('#search-btn')) {
-    data.view = 'search-view';
+    data.view = 'search';
   }
   if (e.target.matches('#library-tab')) {
-    data.view = 'library-view';
+    data.view = 'library';
   }
   switchDisplay();
 }
@@ -44,7 +43,7 @@ function handleClickHeartBtn(e) {
     $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
     data.recipe = null;
     $recipeCard.remove();
-    data.view = 'library-view';
+    data.view = 'library';
     switchDisplay();
   }
   if (e.target.matches('.unlike-btn')) {
@@ -59,8 +58,8 @@ function handleClickModal(e) {
   $modalDisplay.classList.add('hidden');
   if (e.target.matches('.confirm-btn')) {
     var $cardNodeList = document.querySelectorAll('.recipe-card');
-    if (data.view === 'recipe-view') {
-      data.view = 'search-view';
+    if (data.view === 'recipe') {
+      data.view = 'search';
       switchDisplay();
       data.library.pop();
       $cardNodeList[0].remove();
@@ -82,7 +81,7 @@ function handleClickModal(e) {
 $modalDisplay.addEventListener('click', handleClickModal);
 
 $here.addEventListener('click', function (e) {
-  data.view = 'search-view';
+  data.view = 'search';
   switchDisplay();
   $noRecipeMsg.classList.add('hidden');
   data.recipe = null;
@@ -142,7 +141,7 @@ $searchForm.addEventListener('submit', function (e) {
       break;
     }
   }
-  data.view = 'recipe-view';
+  data.view = 'recipe';
   switchDisplay();
   $ldsCircle.classList.remove('hidden');
   getCocktailData(searchInput);
@@ -150,7 +149,7 @@ $searchForm.addEventListener('submit', function (e) {
 
 function beforeReloading(e) {
   switchDisplay();
-  if (data.view === 'recipe-view') {
+  if (data.view === 'recipe') {
     $recipeDisplay.append(createNewRecipe(data.recipe));
   }
   if (data.library) {
@@ -165,20 +164,12 @@ document.addEventListener('DOMContentLoaded', beforeReloading);
 window.addEventListener('pagehide', beforeReloading);
 
 function switchDisplay() {
-  if (data.view === 'search-view') {
-    $searchDisplay.classList.remove('hidden');
-    $recipeDisplay.classList.add('hidden');
-    $libraryDisplay.classList.add('hidden');
-  }
-  if (data.view === 'recipe-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.remove('hidden');
-    $libraryDisplay.classList.add('hidden');
-  }
-  if (data.view === 'library-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.add('hidden');
-    $libraryDisplay.classList.remove('hidden');
+  for (var i = 0; i < $view.length; i++) {
+    if (data.view === $view[i].getAttribute('data-view')) {
+      $view[i].classList.remove('hidden');
+    } else {
+      $view[i].classList.add('hidden');
+    }
   }
 }
 

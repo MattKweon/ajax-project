@@ -1,6 +1,6 @@
 /* exported data */
 var data = {
-  view: 'search-display',
+  view: 'search',
   recipe: null,
   savedRecipe: false,
   library: [],
