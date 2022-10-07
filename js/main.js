@@ -35,10 +35,10 @@ function handleClickHeartBtn(e) {
   var $recipeCard = document.querySelector('.recipe-card');
   if (e.target.matches('.like-btn')) {
     switchHeartBtn();
-    data.savedRecipe = true;
     data.recipe.id = data.nextEntryId;
     data.library.unshift(data.recipe);
     data.nextEntryId++;
+    data.savedRecipe = true;
     $recipeCardList.prepend(createNewRecipe(data.library[0]));
     data.recipe = null;
     $recipeCard.remove();
@@ -130,11 +130,11 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  data.savedRecipe = false;
-  var $cardNodeList = document.querySelectorAll('.recipe-card');
   var skip = false;
+  data.savedRecipe = false;
   for (var i = 0; i < data.library.length; i++) {
     if (data.library[i].name === searchInput) {
+      var $cardNodeList = document.querySelectorAll('.recipe-card');
       $recipeDisplay.append($cardNodeList[i].cloneNode(true));
       data.savedRecipe = true;
       skip = true;
