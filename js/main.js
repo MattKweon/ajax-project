@@ -46,10 +46,15 @@ function handleClickHeartBtn(e) {
     data.view = 'library';
     switchDisplay();
   }
-  if (e.target.matches('.unlike-btn')) {
-    $modalDisplay.classList.remove('hidden');
-    data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
-  }
+  // if (e.target.matches('.unlike-btn')) {
+  //   debugger;
+  //   $modalDisplay.classList.remove('hidden');
+  //   if (data.view = 'recipe') {
+  //     add the data.id from the recipe display card
+  //     data.removeId =
+  //   }
+  //   data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
+  // }
 }
 
 document.addEventListener('click', handleClickHeartBtn);
