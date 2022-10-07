@@ -125,7 +125,7 @@ function getCocktailImg(name) {
 }
 
 $searchBar.addEventListener('input', function (e) {
-  searchInput = e.target.value;
+  searchInput = e.target.value.toLowerCase();
 });
 
 $searchForm.addEventListener('submit', function (e) {
