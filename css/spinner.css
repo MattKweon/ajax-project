@@ -1,8 +1,9 @@
 .lds-circle {
   display: inline-block;
-  display: flex;
-  transform: translateZ(1px);
-  justify-content: center;
+  transform: translateZ(1px) translateX(-50%);
+  position: absolute;
+  top: 40%;
+  left: 50%;
 }
 
 .lds-circle > div {
@@ -11,7 +12,7 @@
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  background: #fff;
+  background: #b4d7eb;
   animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 

@@ -1,83 +1,52 @@
-var $main = document.querySelector('main');
 var $navBar = document.querySelector('.nav-bar');
-var $searchDisplay = document.querySelector('.search-display');
-var $recipeDisplay = document.querySelector('.recipe-display');
-var $libraryDisplay = document.querySelector('.library-display');
+var $view = document.querySelectorAll('.display');
+var $recipeDisplay = document.querySelector('[data-view=recipe]');
 var $recipeCardList = document.querySelector('.recipe-card-list');
 var $modalDisplay = document.querySelector('.modal-display');
 var $searchForm = document.querySelector('.search-form');
 var $searchBar = document.querySelector('#search-bar');
 var searchInput = '';
-
-function switchDisplay() {
-  if (data.view === 'search-view') {
-    $searchDisplay.classList.remove('hidden');
-    $recipeDisplay.classList.add('hidden');
-    $libraryDisplay.classList.add('hidden');
-  }
-  if (data.view === 'recipe-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.remove('hidden');
-    $libraryDisplay.classList.add('hidden');
-  }
-  if (data.view === 'library-view') {
-    $searchDisplay.classList.add('hidden');
-    $recipeDisplay.classList.add('hidden');
-    $libraryDisplay.classList.remove('hidden');
-  }
-}
-
-function switchHeartBtn() {
-  var $likeBtn = document.querySelector('.like-btn');
-  var $unlikeBtn = document.querySelector('.unlike-btn');
-  $likeBtn.classList.add('hidden');
-  $unlikeBtn.classList.remove('hidden');
-}
-
-function switchModalDisplay(status) {
-  if (status === 'on') {
-    $modalDisplay.classList.remove('hidden');
-  }
-  if (status === 'off') {
-    $modalDisplay.classList.add('hidden');
-  }
-}
+var $ldsCircle = document.querySelector('.lds-circle');
+var $networkErrorMsg = document.querySelector('.network-error-msg');
+var $noRecipeMsg = document.querySelector('.no-recipe-msg');
+var $here = document.querySelector('#here');
 
 function handleClickNavBar(e) {
   var $recipeCard = document.querySelector('.recipe-card');
-  var $noRecipeMsg = document.querySelector('.no-recipe-msg');
-  if (data.recipe) {
-    if ($recipeCard) {
-      $recipeCard.remove();
-    }
-  }
   if ($noRecipeMsg) {
-    $noRecipeMsg.remove();
+    $noRecipeMsg.classList.add('hidden');
   }
-  data.recipe = null;
+  if (data.recipe) {
+    data.recipe = null;
+    $recipeCard.remove();
+  }
   if (e.target.matches('#search-btn')) {
-    data.view = 'search-view';
-    switchDisplay();
+    data.view = 'search';
   }
   if (e.target.matches('#library-tab')) {
-    data.view = 'library-view';
-    switchDisplay();
+    data.view = 'library';
   }
+  switchDisplay();
 }
 
 $navBar.addEventListener('click', handleClickNavBar);
 
 function handleClickHeartBtn(e) {
+  var $recipeCard = document.querySelector('.recipe-card');
   if (e.target.matches('.like-btn')) {
     switchHeartBtn();
-    data.savedRecipe = true;
     data.recipe.id = data.nextEntryId;
-    data.library.push(data.recipe);
+    data.library.unshift(data.recipe);
     data.nextEntryId++;
-    $recipeCardList.prepend(createNewRecipe(data.library[data.library.length - 1]));
+    data.savedRecipe = true;
+    $recipeCardList.prepend(createNewRecipe(data.library[0]));
+    data.recipe = null;
+    $recipeCard.remove();
+    data.view = 'library';
+    switchDisplay();
   }
   if (e.target.matches('.unlike-btn')) {
-    switchModalDisplay('on');
+    $modalDisplay.classList.remove('hidden');
     data.removeId = Number(e.target.closest('li').getAttribute('data-id'));
   }
 }
@@ -85,23 +54,22 @@ function handleClickHeartBtn(e) {
 document.addEventListener('click', handleClickHeartBtn);
 
 function handleClickModal(e) {
-  switchModalDisplay('off');
+  $modalDisplay.classList.add('hidden');
   if (e.target.matches('.confirm-btn')) {
     var $cardNodeList = document.querySelectorAll('.recipe-card');
-    if (data.view === 'recipe-view') {
-      data.view = 'search-view';
-      switchDisplay();
-      data.library.pop();
+    if (data.view === 'recipe') {
       $cardNodeList[0].remove();
-    }
-    for (var i = 0; i < data.library.length; i++) {
-      if (data.removeId === data.library[i].id) {
-        data.library.splice(i, 1);
-      }
+      data.view = 'search';
+      switchDisplay();
     }
     for (var j = 0; j < $cardNodeList.length; j++) {
       if (data.removeId === Number($cardNodeList[j].getAttribute('data-id'))) {
         $cardNodeList[j].remove();
+      }
+    }
+    for (var i = 0; i < data.library.length; i++) {
+      if (data.removeId === data.library[i].id) {
+        data.library.splice(i, 1);
       }
     }
   }
@@ -109,21 +77,26 @@ function handleClickModal(e) {
 
 $modalDisplay.addEventListener('click', handleClickModal);
 
+$here.addEventListener('click', function (e) {
+  data.view = 'search';
+  switchDisplay();
+  $noRecipeMsg.classList.add('hidden');
+  data.recipe = null;
+});
+
 function getCocktailData(name) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.api-ninjas.com/v1/cocktail?name=' + name);
   xhr.setRequestHeader('X-Api-Key', 'ujIh5vKEEre0q2ZePCZcoluwqMqEinW21MpI5zdf');
   xhr.responseType = 'json';
   xhr.addEventListener('error', function () {
-    networkErrorMsg();
+    $networkErrorMsg.classList.remove('hidden');
   });
   xhr.addEventListener('load', function () {
     data.recipe = xhr.response[0];
-    $searchForm.reset();
     if (data.recipe === undefined) {
-      var $ldsCircle = document.querySelector('.lds-circle');
-      noRecipeMsg();
-      $ldsCircle.remove();
+      $noRecipeMsg.classList.remove('hidden');
+      $ldsCircle.classList.add('hidden');
     } else {
       getCocktailImg(searchInput);
     }
@@ -143,11 +116,10 @@ function getCocktailImg(name) {
       imgUrl: data.recipe.imgUrl,
       name: data.recipe.name,
       ingredients: data.recipe.ingredients,
-      instructions: data.recipe.ingredients
+      instructions: data.recipe.instructions
     };
-    var $ldsCircle = document.querySelector('.lds-circle');
     $recipeDisplay.append(createNewRecipe(searchEntry));
-    $ldsCircle.remove();
+    $ldsCircle.classList.add('hidden');
   });
   xhr.send();
 }
@@ -158,12 +130,59 @@ $searchBar.addEventListener('input', function (e) {
 
 $searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  data.view = 'recipe-view';
+  var skip = false;
   data.savedRecipe = false;
+  for (var i = 0; i < data.library.length; i++) {
+    if (data.library[i].name === searchInput) {
+      var $cardNodeList = document.querySelectorAll('.recipe-card');
+      $recipeDisplay.append($cardNodeList[i].cloneNode(true));
+      data.savedRecipe = true;
+      skip = true;
+      break;
+    }
+  }
+  if (skip === false) {
+    $ldsCircle.classList.remove('hidden');
+    getCocktailData(searchInput);
+  }
+  $searchForm.reset();
+  data.view = 'recipe';
   switchDisplay();
-  $main.prepend(createSpinner());
-  getCocktailData(searchInput);
 });
+
+function beforeReloading(e) {
+  switchDisplay();
+  if (data.view === 'recipe') {
+    $recipeDisplay.append(createNewRecipe(data.recipe));
+    data.savedRecipe = true;
+  }
+  if (data.library) {
+    for (var i = 0; i < data.library.length; i++) {
+      $recipeCardList.append(createNewRecipe(data.library[i]));
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', beforeReloading);
+
+window.addEventListener('pagehide', beforeReloading);
+
+function switchDisplay() {
+  for (var i = 0; i < $view.length; i++) {
+    if (data.view === $view[i].getAttribute('data-view')) {
+      $view[i].classList.remove('hidden');
+    } else {
+      $view[i].classList.add('hidden');
+    }
+  }
+}
+
+function switchHeartBtn() {
+  var $likeBtn = document.querySelector('.like-btn');
+  var $unlikeBtn = document.querySelector('.unlike-btn');
+  $likeBtn.classList.add('hidden');
+  $unlikeBtn.classList.remove('hidden');
+}
 
 function titleCase(string) {
   var output = '';
@@ -190,43 +209,13 @@ function titleCase(string) {
   return output;
 }
 
-function createSpinner() {
-  var spinner = document.createElement('div');
-  spinner.setAttribute('class', 'load-container');
-  spinner.setAttribute('class', 'lds-circle');
-  var childDiv = document.createElement('div');
-  spinner.appendChild(childDiv);
-  return spinner;
-}
-
-function noRecipeMsg() {
-  var msg = document.createElement('div');
-  msg.setAttribute('class', 'no-recipe-msg');
-  var noRecipe = document.createElement('h1');
-  noRecipe.textContent = 'Recipe not found';
-  msg.appendChild(noRecipe);
-  var lookForNew = document.createElement('h4');
-  lookForNew.textContent = 'click the search icon to look for a new recipe';
-  msg.appendChild(lookForNew);
-  $main.appendChild(msg);
-}
-
-function networkErrorMsg() {
-  var networkError = document.createElement('div');
-  networkError.setAttribute('class', 'network-error-msg');
-  var noConnection = document.createElement('p');
-  noConnection.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
-  networkError.appendChild(noConnection);
-  $main.appendChild(networkError);
-}
-
 function createNewRecipe(entry) {
   var ingredientList = entry.ingredients;
   var cardContainer = document.createElement('li');
   cardContainer.setAttribute('class', 'recipe-card container');
   cardContainer.setAttribute('data-id', entry.id);
   var rowEl = document.createElement('div');
-  rowEl.setAttribute('class', 'row');
+  rowEl.setAttribute('class', 'row wrap');
   cardContainer.appendChild(rowEl);
   var colHalf = document.createElement('div');
   colHalf.setAttribute('class', 'col-half');
@@ -273,26 +262,10 @@ function createNewRecipe(entry) {
   var p = document.createElement('p');
   p.textContent = entry.instructions;
   newColHalf.appendChild(p);
-  if (!data.savedRecipe) {
-    unlikeBtn.classList.add('hidden');
-  } else {
+  if (data.savedRecipe) {
     likeBtn.classList.add('hidden');
+  } else {
+    unlikeBtn.classList.add('hidden');
   }
   return cardContainer;
 }
-
-function beforeReloading(e) {
-  switchDisplay();
-  if (data.view === 'recipe-view') {
-    $recipeDisplay.append(createNewRecipe(data.recipe));
-  }
-  if (data.library) {
-    for (var i = 0; i < data.library.length; i++) {
-      $recipeCardList.prepend(createNewRecipe(data.library[i]));
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', beforeReloading);
-
-window.addEventListener('pagehide', beforeReloading);

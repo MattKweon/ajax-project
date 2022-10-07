@@ -3,12 +3,8 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-.flex {
-  display: flex;
-}
-
-.no-wrap {
-  flex-wrap: nowrap;
+.wrap {
+  flex-wrap: wrap;
 }
 
 .right-align {
@@ -34,7 +30,7 @@ body {
   left: 0.5rem;
 }
 
-a {
+#library-tab {
   font-size: 1.1rem;
   font-weight: 500;
   color: black;
@@ -50,7 +46,7 @@ a {
   margin: 1.5rem 1rem 0;
 }
 
-.search-display {
+[data-view="search"] {
   height: 100vh;
   width: 100%;
   background-image:
@@ -73,12 +69,12 @@ a {
   margin: 2rem 1rem;
 }
 
-.search-display h1 {
+[data-view="search"] h1 {
   font-weight: 100;
   font-size: 2.5rem;
 }
 
-.search-display input {
+[data-view="search"] input {
   border: none;
   border-radius: 5px;
   width: 100%;
@@ -86,7 +82,7 @@ a {
   padding-left: 1rem;
 }
 
-.search-display p {
+[data-view="search"] p {
   font-weight: 500;
   font-size: 0.8rem;
 }
@@ -123,7 +119,6 @@ span {
 
 .recipe-content h1 {
   font-weight: 400;
-  text-decoration: underline;
 }
 
 .like-btn {
@@ -144,7 +139,7 @@ span {
   line-height: 1.5;
 }
 
-.library-display h2 {
+[data-view="library"] h2 {
   text-align: center;
 }
 
@@ -204,7 +199,6 @@ span {
 }
 
 .network-error-msg {
-  max-width: 20rem;
   min-width: 20rem;
   margin: 2rem;
 }
@@ -220,5 +214,10 @@ span {
 
   .cocktail-img {
     border-radius: 10px 0 0 10px;
+  }
+
+  .network-error-msg {
+    text-align: center;
+    min-width: none;
   }
 }

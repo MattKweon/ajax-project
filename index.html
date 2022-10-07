@@ -12,9 +12,9 @@
   <title>Cocktail Card Deck</title>
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/spinner.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/spinner.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto:wght@100;300;400;500&display=swap"
@@ -25,10 +25,12 @@
   <header>
     <div class="nav-bar">
       <div class="row no-wrap">
-        <div class="col-half flex">
-          <img class="logo-img" src="images/cocktail.png" alt="Logo">
-          <h3 class="logo-name">MoBev!</h3>
-          <a id="library-tab" href="#">Library</a>
+        <div class="col-half">
+          <div class="row">
+            <img class="logo-img" src="images/cocktail.png" alt="Logo">
+            <h3 class="logo-name">MoBev!</h3>
+            <a id="library-tab" href="#">Library</a>
+          </div>
         </div>
         <div class="col-half right-align">
           <input type="image" id="search-btn" src="images/search.png" alt="Search Button">
@@ -37,7 +39,7 @@
     </div>
   </header>
   <main>
-    <div class="search-display">
+    <div data-view="search" class="display">
       <div class="background-img-overlay">
         <div class="container search-content">
           <div class="row">
@@ -60,9 +62,20 @@
         </div>
       </div>
     </div>
-    <div class="recipe-display hidden"></div>
-    <div class="library-display hidden">
-      <h2>Recipe List</h2>
+    <div data-view="recipe" class="display hidden">
+      <div class="network-error-msg hidden">
+        <p>Sorry, there was an error connecting to the network! Please check your internet connection and try again.</p>
+      </div>
+      <div class="no-recipe-msg hidden">
+        <h1>Recipe not found</h1>
+        <h4>click <a id="here" href="#">here</a> to look for a new recipe</h4>
+      </div>
+      <div class="lds-circle hidden">
+        <div></div>
+      </div>
+    </div>
+    <div data-view="library" class="display hidden">
+      <h2>Recipe Card Library</h2>
       <ul class="recipe-card-list"></ul>
     </div>
     <div class="modal-display hidden">
