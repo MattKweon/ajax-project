@@ -10,6 +10,13 @@ var $ldsCircle = document.querySelector('.lds-circle');
 var $networkErrorMsg = document.querySelector('.network-error-msg');
 var $noRecipeMsg = document.querySelector('.no-recipe-msg');
 var $here = document.querySelector('#here');
+var $noneSavedMsg = document.querySelector('.none-saved-msg');
+
+if (data.library.length !== 0) {
+  $noneSavedMsg.classList.add('hidden');
+} else {
+  $noneSavedMsg.classList.remove('hidden');
+}
 
 function handleClickNavBar(e) {
   var $recipeCard = document.querySelector('.recipe-card');
@@ -42,6 +49,7 @@ function handleClickHeartBtn(e) {
     $recipeCardList.prepend(createNewRecipe(data.library[0]));
     data.recipe = null;
     $recipeCard.remove();
+    $noneSavedMsg.classList.add('hidden');
     data.view = 'library';
     switchDisplay();
   }
@@ -72,6 +80,9 @@ function handleClickModal(e) {
         data.library.splice(i, 1);
       }
     }
+  }
+  if (data.library.length === 0) {
+    $noneSavedMsg.classList.remove('hidden');
   }
 }
 
