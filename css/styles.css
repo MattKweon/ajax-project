@@ -40,6 +40,12 @@ body {
   left: 2rem;
 }
 
+.search-btn-container {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 #search-btn {
   height: 25px;
   width: 25px;
