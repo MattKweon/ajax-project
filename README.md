@@ -36,4 +36,4 @@ Try the application live at [https://mattkweon.github.io/cocktail-card-deck/](ht
 
 ### Stretch Features:
 - Show more than one recipe when users search a cocktail
-- Allow users to filter search by types if liquor
+- Allow users to filter search by types of liquor
